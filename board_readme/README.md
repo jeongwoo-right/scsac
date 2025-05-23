@@ -9,6 +9,22 @@
 권한 기반 접근 제한을 통해 **운영의 질서를 유지**하면서도,  
 **누구나 쉽게 작성하고 소통할 수 있는 구조**를 지향합니다.
 
+## 🧰 기술 스택
+### 🔵 Frontend
+- React	컴포넌트 기반 UI 개발, JSX 사용
+- TypeScript	정적 타입 검사를 통한 안정성 향상
+- Redux Toolkit	전역 상태 관리 (로그인 상태, 게시글 목록 등)
+- React Router DOM	게시판/게시글/마이페이지 등 라우팅 처리
+- Axios	API 요청 (withCredentials로 세션 쿠키 전송)
+
+### 🟡 Backend
+- Spring Boot	RESTful API 제공
+- JPA (Hibernate)	엔티티 기반 ORM 매핑
+- MySQL	RDBMS 기반 게시글/유저/알림 저장
+- Spring Security	세션 기반 로그인 인증/인가 처리
+- Maven	의존성 관리
+- Session + Cookie 인증 방식	로그인 후 세션ID를 쿠키로 유지, 서버에서 인증 처리
+
 
 ## 📂 기능 구성
 
