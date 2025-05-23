@@ -25,6 +25,9 @@
 - Maven	의존성 관리
 - Session + Cookie 인증 방식	로그인 후 세션ID를 쿠키로 유지, 서버에서 인증 처리
 
+## API 명세
+![API 명세서](./API.png)
+
 
 ## 📂 기능 구성
 
