@@ -2,7 +2,8 @@
 import Header from './components/Header'
 import LoginPage from './pages/LoginPage'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import MainPage from './pages/MainPage'
+import CategoryListPage from './pages/CategoryListPage'
+import BoardPage from './pages/BoardPage'
 
 
 function App() {
@@ -12,7 +13,8 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/main" element={<MainPage />} />
+        <Route path="/category" element={<CategoryListPage />} />
+        <Route path="/category/:id" element={<BoardPage />} />
       </Routes>
     </BrowserRouter>
     </>

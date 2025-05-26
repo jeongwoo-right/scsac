@@ -18,17 +18,6 @@ CREATE SCHEMA IF NOT EXISTS `scsac` DEFAULT CHARACTER SET utf8mb3 ;
 USE `scsac` ;
 
 -- -----------------------------------------------------
--- Table `scsac`.`category`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `scsac`.`category` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(1000) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb3;
-
-
--- -----------------------------------------------------
 -- Table `scsac`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `scsac`.`user` (
@@ -46,27 +35,40 @@ DEFAULT CHARACTER SET = utf8mb3;
 
 
 -- -----------------------------------------------------
+-- Table `scsac`.`category`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `scsac`.`category` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 3
+DEFAULT CHARACTER SET = utf8mb3;
+
+
+-- -----------------------------------------------------
 -- Table `scsac`.`article`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `scsac`.`article` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `category_id` INT NOT NULL,
-  `title` VARCHAR(1000) NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `content` TINYTEXT NOT NULL,
+  `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+  `is_updated` INT NULL DEFAULT '0',
+  `title` VARCHAR(200) NOT NULL,
+  `views` INT NULL DEFAULT '0',
+  `category_id` BIGINT NOT NULL,
   `user_id` VARCHAR(255) NOT NULL,
-  `content` LONGTEXT NOT NULL,
-  `create_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `is_updated` INT NOT NULL DEFAULT '0',
-  `views` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  INDEX `categort_id_idx` (`category_id` ASC) VISIBLE,
-  INDEX `user_id_idx` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `categort_id`
-    FOREIGN KEY (`category_id`)
-    REFERENCES `scsac`.`category` (`id`),
-  CONSTRAINT `user_id`
+  INDEX `FKy5kkohbk00g0w88fi05k2hcw` (`category_id` ASC) VISIBLE,
+  INDEX `FKbc2qerk3l47javnl2yvn51uoi` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `FKbc2qerk3l47javnl2yvn51uoi`
     FOREIGN KEY (`user_id`)
-    REFERENCES `scsac`.`user` (`id`))
+    REFERENCES `scsac`.`user` (`id`),
+  CONSTRAINT `FKy5kkohbk00g0w88fi05k2hcw`
+    FOREIGN KEY (`category_id`)
+    REFERENCES `scsac`.`category` (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8mb3;
 
 

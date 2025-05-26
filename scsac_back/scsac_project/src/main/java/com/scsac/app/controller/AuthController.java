@@ -1,5 +1,7 @@
 package com.scsac.app.controller;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,7 +42,7 @@ public class AuthController {
 		        context
 		    );
 		
-		return ResponseEntity.ok("로그인 성공!");
+		return ResponseEntity.ok(Map.of("token", token));
 	}
 	
 	@PostMapping("/check")
