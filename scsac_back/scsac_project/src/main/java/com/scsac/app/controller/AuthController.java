@@ -1,5 +1,7 @@
 package com.scsac.app.controller;
 
+import java.util.Map;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -44,6 +46,7 @@ public class AuthController {
 		String token = tokenProvider.generateToken(user.getId(), role);
 		
 		return ResponseEntity.ok().body("Bearer "+ token);
+
 	}
 	
 	@PostMapping("/check")

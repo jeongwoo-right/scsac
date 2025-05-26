@@ -39,3 +39,8 @@
 .nickname {
   margin-right: 4px;
 }
+
+.header-buttons .icon-button {
+  background-color: transparent;
+  color: white;
+}

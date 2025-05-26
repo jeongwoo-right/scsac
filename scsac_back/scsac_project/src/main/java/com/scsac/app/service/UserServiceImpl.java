@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
 	public User findbyId(String id) {
 		Optional<UserEntity> e = ur.findById(id);
 		if (e.isPresent())
-			return UserEntity.toDto(e.get());
+			return User.toDto(e.get());
 		else
 			return null;
 	}

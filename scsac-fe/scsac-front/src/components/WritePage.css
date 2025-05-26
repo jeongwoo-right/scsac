@@ -1,0 +1,53 @@
+.write-page {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 24px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-family: 'Pretendard', sans-serif;
+}
+
+.write-page h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+.write-page input,
+.write-page textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.write-page textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+
+.write-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.write-buttons button {
+  flex: 1;
+  padding: 12px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.write-buttons button:first-child {
+  background-color: #0d6efd;
+  color: white;
+}
+
+.write-buttons button:last-child {
+  background-color: #dee2e6;
+  color: #333;
+}

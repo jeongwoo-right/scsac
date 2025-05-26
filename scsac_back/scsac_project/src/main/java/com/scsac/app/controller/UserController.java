@@ -51,10 +51,14 @@ public class UserController {
 		}
 	}
 
-	@PutMapping("/user")
-	public ResponseEntity<?> update(@RequestBody User user) {
-		var auth = SecurityContextHolder.getContext().getAuthentication();
-	    String id = (String) auth.getPrincipal();
+
+	@PutMapping("/")
+	public ResponseEntity<?> update(@AuthenticationPrincipal UserPrincipal loginUser ,@RequestBody User user) {
+		if(loginUser==null) {
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		}
+		
+		String id = loginUser.getUsername();
 		
 		if(!id.equals(user.getId())) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);

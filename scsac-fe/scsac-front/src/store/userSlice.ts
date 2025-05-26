@@ -37,8 +37,10 @@ const userSlice = createSlice({
         ...action.payload,
       }
     },
+
+
     logout: () => {
-      localStorage.removeItem('jwt')
+      localStorage.removeItem('jwt');
       return { ...initialState }
     },
   },

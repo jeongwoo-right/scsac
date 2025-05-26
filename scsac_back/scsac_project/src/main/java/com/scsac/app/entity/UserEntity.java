@@ -1,7 +1,6 @@
 package com.scsac.app.entity;
 
-import org.antlr.v4.runtime.misc.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scsac.app.dto.User;
 
 import jakarta.persistence.Column;
@@ -13,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -28,6 +28,7 @@ public class UserEntity {
 	private String id;
 
 	@Column(length = 100, nullable = false)
+	@JsonIgnore
 	private String password;
 
 	@Column(nullable = false, columnDefinition = "INT DEFAULT 3")
@@ -48,9 +49,8 @@ public class UserEntity {
 	@Column(length = 100)
 	private String bojId;
 
-	public static User toDto(UserEntity u) {
-		return new User(u.getId(), u.getPassword(), u.getAuthority(), u.getGeneration(), u.getAffiliate(), u.getName(),
-				u.getNickname(), u.getBojId());
-
+	public static UserEntity toEntity(User u) {
+		return new UserEntity(u.getId(), u.getPassword(), u.getAuthority(), u.getGeneration(), u.getAffiliate(),
+				u.getName(), u.getNickname(), u.getBojId());
 	}
 }

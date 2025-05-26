@@ -25,8 +25,11 @@ public class User {
 	private String nickname;
 	private String bojId;
 
-	public static UserEntity toEntity(User u) {
-		return new UserEntity(u.getId(), u.getPassword(), u.getAuthority(), u.getGeneration(), u.getAffiliate(),
-				u.getName(), u.getNickname(), u.getBojId());
+
+	
+	public static User toDto(UserEntity u) {
+		return new User(u.getId(), u.getPassword(), u.getAuthority(), u.getGeneration(), u.getAffiliate(), u.getName(),
+				u.getNickname(), u.getBojId());
+
 	}
 }
