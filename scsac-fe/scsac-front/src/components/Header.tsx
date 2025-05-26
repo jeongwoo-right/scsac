@@ -19,7 +19,7 @@ function Header() {
 
   return (
     <header className="header">
-      <div className="header-title">SCSAC</div>
+      <div className="header-title">SCSAC: Board</div>
 
       <div className="header-buttons">
         {isLoggedIn ? (

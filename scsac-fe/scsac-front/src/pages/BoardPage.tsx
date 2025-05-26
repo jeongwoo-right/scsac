@@ -9,6 +9,7 @@ interface ArticleSummary {
   title: string
   createdAt: string
   views: number
+  isUpdated: number
 }
 
 function BoardPage() {
@@ -26,7 +27,6 @@ function BoardPage() {
 
     fetchBoard()
   }, [id])
-
 
   
   return (
