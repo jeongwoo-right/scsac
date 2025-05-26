@@ -1,7 +1,6 @@
 package com.scsac.app.entity;
 
-import org.antlr.v4.runtime.misc.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.scsac.app.dto.User;
 
 import jakarta.persistence.Column;
@@ -28,6 +27,7 @@ public class UserEntity {
 	private String id;
 
 	@Column(length = 100, nullable = false)
+	@JsonIgnore
 	private String password;
 
 	@Column(nullable = false, columnDefinition = "INT DEFAULT 3")

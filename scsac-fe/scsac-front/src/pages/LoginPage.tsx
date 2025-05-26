@@ -18,11 +18,16 @@ function LoginPage() {
     try {
       const response = await api.post('/login',{ id, password })
 
+<<<<<<< HEAD
+      console.log('로그인 성공', response.data) // user 정보 출력
+      alert("로그인 성공")
+=======
       // jwt 2줄
       const token = response.data.token
       localStorage.setItem("jwt", token)
       
       console.log('로그인 성공', response.data.token) // user 정보 출력
+>>>>>>> 73565409984579999f2ffd4965ac413da4db8118
 
       // redux에 사용자 정보를 저장하기 위해 다시 한 번 axios 요청
       const user_infoRes = await api.get(`/user/${id}`)

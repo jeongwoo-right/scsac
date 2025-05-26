@@ -40,8 +40,11 @@ const userSlice = createSlice({
 
 
     logout: () => {
+<<<<<<< HEAD
+=======
       // jwt token 삭제
       localStorage.removeItem('jwt')
+>>>>>>> 73565409984579999f2ffd4965ac413da4db8118
       return { ...initialState }
     },
   },

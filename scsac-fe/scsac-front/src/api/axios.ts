@@ -3,17 +3,6 @@ import axios from 'axios'
 
 const api = axios.create({
   baseURL: 'http://localhost:8080',   // 공통 prefix
+  withCredentials: true,              // 세션 쿠키 자동 포함
 })
-
-// jwt token 추가
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('jwt')
-  if (token) {
-    // token => `Bearer ${token}`
-    config.headers.Authorization = `Bearer ${token}`
-    // config.headers.Authorization = token
-  }
-  return config
-})
-
 export default api
