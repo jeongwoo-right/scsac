@@ -39,11 +39,7 @@ public class CategoryController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getArticleByCategory(@PathVariable("id") Long id){
 		List<ArticleEntity> articles = cs.getArticlesByCategoryId(id);
-		if(articles==null || articles.size()==0) {
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.ok(articles);
-		}
+		return ResponseEntity.ok(articles);
 		
 	}
 	
