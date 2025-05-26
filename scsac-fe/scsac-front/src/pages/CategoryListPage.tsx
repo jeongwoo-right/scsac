@@ -40,7 +40,7 @@ function CategoryListPage() {
     }
 
     try {
-      await api.post('/category', {name: newCategory})
+      await api.post('/category', {title: newCategory})
       alert("✅ 게시판이 생성되었습니다!")
       setNewCategory("")
       setIsModalOpen(false)
