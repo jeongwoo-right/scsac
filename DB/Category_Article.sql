@@ -5,7 +5,7 @@ DROP TABLE IF EXISTS article;
 -- 📁 category 테이블
 CREATE TABLE category (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(100) NOT NULL
+  title VARCHAR(100) NOT NULL
 );
 
 -- 📁 article 테이블
@@ -17,8 +17,9 @@ CREATE TABLE article (
   content TEXT NOT NULL,
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
   views INT DEFAULT 0,
+  isUpdated INT DEFAULT 0,
 
-  FOREIGN KEY (category_id) REFERENCES category(id)
+  FOREIGN KEY (category_id, user_id) REFERENCES category(id)
 );
 
 -- 📌 카테고리 더미 데이터
