@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scsac.app.dto.Article;
-import com.scsac.app.entity.ArticleEntity;
+import com.scsac.app.dto.request.ArticleRequestDto;
+import com.scsac.app.dto.response.ArticleResponseDto;
 import com.scsac.app.service.ArticleService;
 
 import lombok.RequiredArgsConstructor;
@@ -23,18 +23,19 @@ public class ArticleController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getArticleById(@PathVariable("id") Long id){
-		Article article = as.getArticleById(id);
+		ArticleResponseDto article = as.getArticleById(id);
 		if(article==null) {
 			return ResponseEntity.noContent().build();
 		} else {
+			as.increaseViewCount(id);
 			return ResponseEntity.ok(article);
 		}
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> addArticle(@RequestBody Article article){
+	public ResponseEntity<?> addArticle(@RequestBody ArticleRequestDto article){
 		System.out.println(article);
-		Article saved = as.addArticle(article);
+		ArticleResponseDto saved = as.addArticle(article);
 		return ResponseEntity.ok(saved);
 	}
 }

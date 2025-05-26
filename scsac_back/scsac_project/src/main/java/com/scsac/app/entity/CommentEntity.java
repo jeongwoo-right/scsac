@@ -32,8 +32,9 @@ public class CommentEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@ManyToOne
 	@JoinColumn(name="user_id", nullable = false)
-	private String userId;
+	private UserEntity user;
 	
 	@Column(name="article_id", nullable = false)
 	private Long articleId;

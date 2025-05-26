@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scsac.app.dto.LoginRequest;
+import com.scsac.app.dto.request.LoginRequest;
 import com.scsac.app.entity.UserEntity;
 import com.scsac.app.entity.UserRole;
 import com.scsac.app.repository.UserRepository;
@@ -45,7 +45,7 @@ public class AuthController {
 		
 		String token = tokenProvider.generateToken(user.getId(), role);
 		
-		return ResponseEntity.ok().body("Bearer "+ token);
+		return ResponseEntity.ok().body(token);
 
 	}
 	

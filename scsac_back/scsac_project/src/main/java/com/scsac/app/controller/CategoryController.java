@@ -12,8 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scsac.app.dto.Article;
-import com.scsac.app.dto.Category;
+import com.scsac.app.dto.request.CategoryRequestDto;
 import com.scsac.app.dto.response.CategoryResponseDto;
 import com.scsac.app.entity.ArticleEntity;
 import com.scsac.app.entity.CategoryEntity;
@@ -38,12 +37,11 @@ public class CategoryController {
 	public ResponseEntity<?> getArticleByCategory(@PathVariable("id") Long id){
 		List<ArticleEntity> articles = cs.getArticlesByCategoryId(id);
 		return ResponseEntity.ok(articles);
-		
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> addCategory(@RequestBody Category category){
-		CategoryEntity saved = cs.addCategory(category.getTitle());
+	public ResponseEntity<?> addCategory(@RequestBody CategoryRequestDto category){
+		CategoryResponseDto saved = cs.addCategory(category);
 		if (saved==null) {
 			return ResponseEntity.badRequest().build();
 		} else {

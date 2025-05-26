@@ -6,16 +6,18 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import com.scsac.app.dto.Article;
-import com.scsac.app.dto.Comment;
+import com.scsac.app.dto.request.ArticleRequestDto;
+import com.scsac.app.dto.response.ArticleResponseDto;
 import com.scsac.app.entity.ArticleEntity;
 import com.scsac.app.entity.CategoryEntity;
 import com.scsac.app.entity.UserEntity;
+import com.scsac.app.mapper.ArticleMapper;
 import com.scsac.app.repository.ArticleRepository;
 import com.scsac.app.repository.CategoryRepository;
 import com.scsac.app.repository.CommentRepository;
 import com.scsac.app.repository.UserRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,34 +28,31 @@ public class ArticleServiceImpl implements ArticleService {
 	private final ArticleRepository ar;
 	private final CategoryRepository ctr;
 	private final CommentRepository cr;
+	private final ArticleMapper am;
 	
-	public void fillComments(Article article){
-		List<Comment> comments = cr.findAllByArticleId(article.getId()).stream().map(Comment::toDto).collect(Collectors.toList());
-		article.setComments(comments);
-	}
 	
 	@Override
-	public Article getArticleById(Long id) {
+	@Transactional
+	public ArticleResponseDto getArticleById(Long id) {
 		ArticleEntity articleE = ar.findById(id)
 									.orElseThrow(() -> new NoSuchElementException("해당 게시글이 존재하지 않습니다. id=" + id));
-		Article article = Article.toDto(articleE);
-		fillComments(article);
+		ArticleResponseDto article = am.toDto(articleE);
 		return article;
 	}
 
 	@Override
-	public Article addArticle(Article article) {
-		System.out.println(article);
-		UserEntity user = ur.findById(article.getUserId())
-			    .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
+	@Transactional
+	public ArticleResponseDto addArticle(ArticleRequestDto article) {
+		ArticleEntity ae = ar.save(am.toEntity(article));
+		return am.toDto(ae);
+	}
 
-		CategoryEntity category = ctr.findById(article.getCategoryId())
-			    .orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 없습니다."));
-		
-		ArticleEntity ae = ArticleEntity.toEntity(article);
-		ae.setCategory(category);
-		ae.setUser(user);
-		return Article.toDto(ae);
+	@Override
+	@Transactional
+	public void increaseViewCount(Long articleId) {
+	    ArticleEntity article = ar.findById(articleId)
+	        .orElseThrow(() -> new RuntimeException("게시글이 존재하지 않습니다."));
+	    article.setViews(article.getViews() + 1);
 	}
 
 }

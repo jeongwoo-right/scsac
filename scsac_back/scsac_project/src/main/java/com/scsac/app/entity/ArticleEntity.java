@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.CRC32;
 
-import com.scsac.app.dto.Article;
 import com.scsac.app.repository.CommentRepository;
 
 @Entity
@@ -47,24 +46,6 @@ public class ArticleEntity {
     @Column(columnDefinition = "INT DEFAULT 0")
     private int isUpdated;
 
-	public static ArticleEntity toEntity(Article a) {
-		
-	    UserEntity userEntity = new UserEntity();
-	    userEntity.setId(a.getUserId());
-
-	    CategoryEntity categoryEntity = new CategoryEntity();
-	    categoryEntity.setId(a.getCategoryId());
-
-		return new ArticleEntity().builder()
-					.id(a.getId())
-					.content(a.getContent())
-					.title(a.getTitle())
-					.user(userEntity)
-					.category(categoryEntity)
-					.createdAt(a.getCreatedAt())
-					.views(a.getViews())
-					.isUpdated(a.getIsUpdated()).build();
-	}
     
 
 }

@@ -1,11 +1,14 @@
 package com.scsac.app.mapper;
 
+import org.springframework.stereotype.Component;
+
 import com.scsac.app.dto.request.UserRequestDto;
 import com.scsac.app.dto.response.UserResponseDto;
 import com.scsac.app.entity.UserEntity;
 
+@Component
 public class UserMapper {
-	public static UserEntity toEntity(UserRequestDto userRequest) {
+	public UserEntity toEntity(UserRequestDto userRequest) {
 		return UserEntity.builder()
 				.id(userRequest.getId())
 				.affiliate(userRequest.getAffiliate())
@@ -19,7 +22,7 @@ public class UserMapper {
 		
 	}
 	
-	public static UserResponseDto toDto(UserEntity userEntity) {
+	public UserResponseDto toDto(UserEntity userEntity) {
 		return UserResponseDto.builder()
 				.id(userEntity.getId())
 				.affiliate(userEntity.getAffiliate())

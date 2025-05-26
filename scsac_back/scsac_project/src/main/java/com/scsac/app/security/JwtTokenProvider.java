@@ -27,7 +27,7 @@ public class JwtTokenProvider {
 	public String generateToken(String username, String role) {
 		return Jwts.builder()
 				.setSubject(username)
-				.claim("role", role)
+				.claim("role", "ROLE_"+role)
 				.setIssuedAt(new Date())
 				.setExpiration(new Date(System.currentTimeMillis()+EXPIRATION_TIME))
 				.signWith(key)
@@ -39,17 +39,17 @@ public class JwtTokenProvider {
 				.parseClaimsJws(token)
 				.getBody().getSubject();
 	}
-	
 	public boolean validateToken(String token) {
-		try {
-			Jwts.parserBuilder()
-				.setSigningKey(key)
-				.build()
-				.parseClaimsJws(token);
-			return true;
-		} catch (JwtException e) {
-			return false;
-		}
+	    try {
+	        Jwts.parserBuilder()
+	            .setSigningKey(key)
+	            .build()
+	            .parseClaimsJws(token);
+	        return true;
+	    } catch (JwtException e) {
+	        System.out.println("❌ JWT 파싱 실패: " + e.getMessage());
+	        return false;
+	    }
 	}
 	
 	public String getRole(String token) {

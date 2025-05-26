@@ -4,6 +4,8 @@ import api from "../api/axios"
 import { useEffect, useState } from "react"
 import "../components/SidebarLayout.css"
 import { Outlet } from "react-router-dom"
+import { useSelector } from "react-redux"
+import type { RootState } from "../store"
 
 
 interface Category {
@@ -16,6 +18,8 @@ function SidebarLayout() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [newCategory, setNewCategory] = useState("")
   const navigate = useNavigate()
+
+  const isAdmin = useSelector((state: RootState) => state.user.authority)===1;
 
   const fetchCategories = async () => {
     const res = await api.get('/category')
@@ -44,6 +48,9 @@ function SidebarLayout() {
   return (
     <div className="layout-container">
       <aside className="sidebar">
+        { isAdmin &&
+          <button onClick={()=>navigate(`/admin`)}>관리자 페이지</button>
+        }
         <h3>📂 게시판 목록</h3>
         <button className="open-modal-btn" onClick={() => setIsModalOpen(true)}>
           ➕ 게시판 생성

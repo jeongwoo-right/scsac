@@ -1,12 +1,16 @@
 package com.scsac.app.controller;
 
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scsac.app.dto.User;
+import com.scsac.app.dto.request.UserRequestDto;
+import com.scsac.app.dto.response.UserResponseDto;
+import com.scsac.app.entity.UserEntity;
 import com.scsac.app.service.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,20 +37,18 @@ public class UserController {
 
 	@GetMapping("/{id}")
 	public ResponseEntity<?> detail(@PathVariable String id) {
-		User user = us.findbyId(id);
+		UserResponseDto user = us.findbyId(id);
 		if (user != null) {
-			user.setPassword("");
-			return new ResponseEntity<User>(user, HttpStatus.OK);
+			return ResponseEntity.ok(user);
 		} else {
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+			return ResponseEntity.noContent().build();
 		}
 	}
 	
-	@PostMapping("/")
+	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> insert(@RequestParam int num, @RequestParam int generation,
-			@RequestParam String password) {
-		int r = us.insertUser(num, generation, password);
+	public ResponseEntity<?> insert(@RequestBody Map<String, String> data) {
+		int r = us.insertUser(Integer.parseInt(data.get("num")), Integer.parseInt(data.get("generation")), data.get("password"));
 		if (r == 1) {
 			return new ResponseEntity<Integer>(r, HttpStatus.CREATED);
 		} else {
@@ -53,48 +58,49 @@ public class UserController {
 
 
 	@PutMapping("/")
-	public ResponseEntity<?> update(@AuthenticationPrincipal UserPrincipal loginUser ,@RequestBody User user) {
-		if(loginUser==null) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-		}
+	public ResponseEntity<?> update(@RequestBody UserRequestDto user) {
 		
-		String id = loginUser.getUsername();
-		
-		if(!id.equals(user.getId())) {
-			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if (auth != null && auth.isAuthenticated() && !"anonymousUser".equals(auth.getPrincipal())) {
+		    String userId = auth.getName();
+		    
+			if(userId.equals(user.getId())) {
+				int r = us.updateUser(user);
+				if (r == 1) {
+					return new ResponseEntity<Integer>(r, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+				}
+			}
 		}
-		int r = us.updateUser(user);
-		if (r == 1) {
-			return new ResponseEntity<Integer>(r, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
+		return ResponseEntity.badRequest().build();
 	}
 
 	@PutMapping("/admin")
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> updateauhthority(@RequestParam int generation) {
-		int r = us.updateAuthority(generation);
+	public ResponseEntity<?> updateauhthority() {
+		int r = us.updateAuthority();
 		if (r == 1) {
 			return new ResponseEntity<Integer>(r, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 	}
-	
-	@PutMapping("/add_admin")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> updateAdmin(@RequestParam String id) {
-		User user = us.findbyId(id);
-		if (user == null) {
-		    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-		}
-		user.setAuthority(1);
-		int r = us.updateUser(user);
-		if (r == 1) {
-			return new ResponseEntity<Integer>(r, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-		}
-	}
+//	
+//	@PutMapping("/add_admin")
+//	@PreAuthorize("hasRole('ADMIN')")
+//	public ResponseEntity<?> updateAdmin(@RequestParam String id) {
+//		User user = us.findbyId(id);
+//		if (user == null) {
+//		    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//		}
+//		user.setAuthority(1);
+//		int r = us.updateUser(user);
+//		if (r == 1) {
+//			return new ResponseEntity<Integer>(r, HttpStatus.OK);
+//		} else {
+//			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
+//		}
+//	}
 }

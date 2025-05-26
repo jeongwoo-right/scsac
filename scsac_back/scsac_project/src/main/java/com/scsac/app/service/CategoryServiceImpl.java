@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.scsac.app.dto.Category;
+import com.scsac.app.dto.request.CategoryRequestDto;
 import com.scsac.app.dto.response.CategoryResponseDto;
 import com.scsac.app.entity.ArticleEntity;
 import com.scsac.app.entity.CategoryEntity;
@@ -22,6 +22,7 @@ public class CategoryServiceImpl implements CategoryService {
 
 	private final CategoryRepository cr;
 	private final ArticleRepository ar;
+	private final CategoryMapper cm;
 
 	@Override
 	public List<CategoryResponseDto> getCategories() {
@@ -30,11 +31,9 @@ public class CategoryServiceImpl implements CategoryService {
 
 	@Override
 	@Transactional
-	public CategoryEntity addCategory(String title) {
-		CategoryEntity category = CategoryEntity.builder()
-				.title(title)
-				.build();
-		return cr.save(category);
+	public CategoryResponseDto addCategory(CategoryRequestDto category) {
+		CategoryEntity categoryEntity = cm.toEntity(category);
+		return cm.toDto(cr.save(categoryEntity));
 	}
 
 	@Override

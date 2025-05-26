@@ -1,4 +1,4 @@
-package com.scsac.app.dto;
+package com.scsac.app.dto.request;
 
 import lombok.Getter;
 import lombok.Setter;

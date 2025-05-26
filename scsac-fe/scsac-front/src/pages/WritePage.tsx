@@ -24,8 +24,8 @@ function WritePage() {
       const res = await api.post('/article', {
         title,
         content,
-        categoryId: Number(id),
-        userId: user.id,
+        category_id: Number(id),
+        user_id: user.id,
       })
       
       const articleId = res.data.id

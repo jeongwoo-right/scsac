@@ -20,6 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString
 @Table(name = "user")
 public class UserEntity {
 
@@ -31,7 +32,7 @@ public class UserEntity {
 	@JsonIgnore
 	private String password;
 
-	@Column(nullable = false, columnDefinition = "INT DEFAULT 3")
+	@Column(nullable=false, columnDefinition = "INT DEFAULT 3")
 	private int authority;
 
 	@Column(nullable = false)

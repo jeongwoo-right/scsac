@@ -1,12 +1,17 @@
 package com.scsac.app.service;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.scsac.app.dto.User;
+import com.scsac.app.dto.request.UserRequestDto;
+import com.scsac.app.dto.response.UserResponseDto;
 import com.scsac.app.entity.UserEntity;
+import com.scsac.app.mapper.UserMapper;
 import com.scsac.app.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -14,28 +19,30 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
+	
 	private final UserRepository ur;
+	private final UserMapper um;
+	private final PasswordEncoder pw;
+
 
 	@Override
-	public User findbyId(String id) {
-		Optional<UserEntity> e = ur.findById(id);
-		if (e.isPresent())
-			return User.toDto(e.get());
-		else
-			return null;
+	public UserResponseDto findbyId(String id) {
+		UserEntity e = ur.findById(id)
+						.orElseThrow(() -> new NoSuchElementException("해당 사용자가 존재하지 않습니다. id=" + id));
+
+		return um.toDto(e);
 	}
 
 	@Override
-	@Transactional
 	public int insertUser(int num, int generation, String password) {
 		int r = 0;
 		try {
 			for (int i = 1; i <= num; i++) {
 				UserEntity e = new UserEntity();
-				e.setId(String.format("%02d", generation) + String.format("%02d", num));
-				e.setPassword(password);
-				e.setAuthority(3);
+				e.setId(String.format("%02d", generation) + String.format("%02d", i));
+				e.setPassword(pw.encode(password));
 				e.setGeneration(generation);
+				e.setAuthority(3);
 
 				UserEntity saved = ur.save(e);
 				r += saved.getId() != null ? 1 : 0;
@@ -54,14 +61,13 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public int updateUser(User user) {
+	public int updateUser(UserRequestDto user) {
 		Optional<UserEntity> e = ur.findById(String.valueOf(user.getId()));
 		if (e.isEmpty())
 			return 0;
 
 		UserEntity tmp_user = e.get();
-		tmp_user.setPassword(user.getPassword());
-		tmp_user.setAuthority(user.getAuthority());
+		tmp_user.setPassword(pw.encode(user.getPassword()));
 		tmp_user.setAffiliate(user.getAffiliate());
 		tmp_user.setName(user.getName());
 		tmp_user.setNickname(user.getNickname());
@@ -72,8 +78,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public int updateAuthority(int generation) {
-		int r = ur.updateAuthority(generation);
+	public int updateAuthority() {
+		int r = ur.updateAuthority();
 		if (r == 0)
 			return 0;
 		return 1;
