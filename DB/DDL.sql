@@ -4,12 +4,17 @@ SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
--- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
--- -----------------------------------------------------
--- Schema scsac
--- -----------------------------------------------------
+SET GROUP_CONCAT_MAX_LEN = 100000;
+SELECT GROUP_CONCAT(CONCAT('`', table_name, '`') SEPARATOR ', ') INTO @tables
+FROM information_schema.tables
+WHERE table_schema = 'scsac';
+
+SET @sql = CONCAT('DROP TABLE IF EXISTS ', @tables);
+SET FOREIGN_KEY_CHECKS = 0;
+PREPARE stmt FROM @sql;
+EXECUTE stmt;
+DEALLOCATE PREPARE stmt;
+SET FOREIGN_KEY_CHECKS = 1;
 
 -- -----------------------------------------------------
 -- Schema scsac
