@@ -21,15 +21,18 @@ function WritePage() {
     }
 
     try {
-      await api.post('/article', {
+      const res = await api.post('/article', {
         title,
         content,
         categoryId: Number(id),
         userId: user.id,
       })
+      
+      const articleId = res.data.id
 
       alert("✅ 게시글이 등록되었습니다.")
-      navigate(`/category/${id}`) /** 경로, detail로 이동하도록 변경하기 */
+      // navigate(`/category/${id}`) /** 경로, detail로 이동하도록 변경하기 */
+      navigate(`/article/${articleId}`)
     } 
     
     catch(err) {

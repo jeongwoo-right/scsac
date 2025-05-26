@@ -55,40 +55,10 @@ function CategoryListPage() {
 
   return (
     <div className="category-page">
-      <aside className="category-sidebar">
-        <h2>📂 게시판 목록</h2>
-        <button className="open-modal-btn" onClick={() => setIsModalOpen(true)}>
-          ➕ 게시판 생성
-        </button>
-        <ul>
-          {categories.map((cat) => (
-            <li key={cat.id} onClick={() => navigate(`/category/${cat.id}`)}>
-              {cat.title}
-            </li>
-          ))}
-        </ul>
-      </aside>
       <main className="category-main">
         <h4> [게시판 메인 페이지] </h4>
         <p>카테고리를 선택하세요.</p>
       </main>
-      
-      {isModalOpen && (
-        // 모달 바깥 영역을 클릭했을 때, 모달 닫히도록
-        <div className="modal-backdrop" onClick={()=>setIsModalOpen(false)}> 
-          
-          <div className="modal" onClick={(e) => e.stopPropagation()}> {/* stopPropagation: onClick: setIsModalOpen(false) 내부에는 전파되지 않도록! */}
-            <h3>게시판 생성</h3>
-            <input type="text" value={newCategory} placeholder="게시판 이름" 
-            onChange = {(e) => setNewCategory(e.target.value)} />
-            <div className="modal-buttons">
-              <button onClick={handleCreateCategory}>생성</button>
-              <button onClick={()=> setIsModalOpen(false)}>취소</button>
-            </div>
-          </div>
-          
-        </div>
-      )}
 
     </div>
   )

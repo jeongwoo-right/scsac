@@ -46,7 +46,7 @@ function ArticleDetailPage() {
     <div className = "article-detail">
       <h2>{article.title}</h2>
       <div className="article-meta">
-        👤 작성자: {article.user.name} | 🕒 {article.createdAt} | 👁️ {article.views} 조회
+        👤 작성자: {article.user.name}({article.user.affiliate}) | 🕒 {article.createdAt} | 👁️ {article.views} 조회
       </div>
       <div className="article-content"> {article.content} </div>
       <button onClick={() => navigate(-1)}>← 뒤로가기</button>
