@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.scsac.app.dto.Category;
+import com.scsac.app.dto.response.CategoryResponseDto;
 import com.scsac.app.entity.ArticleEntity;
 import com.scsac.app.entity.CategoryEntity;
+import com.scsac.app.mapper.CategoryMapper;
 import com.scsac.app.repository.ArticleRepository;
 import com.scsac.app.repository.CategoryRepository;
 
@@ -22,13 +24,8 @@ public class CategoryServiceImpl implements CategoryService {
 	private final ArticleRepository ar;
 
 	@Override
-	public List<Category> getCategories() {
-		List<CategoryEntity> ces = cr.findAll();
-		List<Category> cs = new ArrayList<>();
-		for (CategoryEntity ce : ces) {
-			cs.add(Category.toDto(ce));
-		}
-		return cs;
+	public List<CategoryResponseDto> getCategories() {
+		return cr.findAll().stream().map(CategoryMapper::toDto).toList();
 	}
 
 	@Override

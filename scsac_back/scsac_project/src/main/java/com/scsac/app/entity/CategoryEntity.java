@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import com.scsac.app.dto.Category;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,10 +29,7 @@ public class CategoryEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(length=255, nullable = false)
 	private String title;
 	
-	public CategoryEntity toEntity(Category c) {
-		return new CategoryEntity(c.getId(), c.getTitle());
-	}
-
 }
