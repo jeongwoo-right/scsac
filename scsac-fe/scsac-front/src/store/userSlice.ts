@@ -38,7 +38,6 @@ const userSlice = createSlice({
       }
     },
     logout: () => {
-      localStorage.removeItem('jwt')
       return { ...initialState }
     },
   },
