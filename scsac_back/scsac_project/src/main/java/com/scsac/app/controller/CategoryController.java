@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.scsac.app.dto.Article;
 import com.scsac.app.dto.Category;
+import com.scsac.app.dto.response.CategoryResponseDto;
 import com.scsac.app.entity.ArticleEntity;
 import com.scsac.app.entity.CategoryEntity;
 import com.scsac.app.service.CategoryService;
@@ -29,12 +30,8 @@ public class CategoryController {
 	
 	@GetMapping
 	public ResponseEntity<?> getCategories(){
-		List<Category> categories = cs.getCategories();
-		if(categories==null || categories.size()==0) {
-			return ResponseEntity.noContent().build();
-		} else {
-			return ResponseEntity.ok(categories);
-		}
+		List<CategoryResponseDto> categories = cs.getCategories();
+		return ResponseEntity.ok(categories);
 	}
 	
 	@GetMapping("/{id}")
