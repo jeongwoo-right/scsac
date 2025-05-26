@@ -3,18 +3,22 @@ package com.scsac.app.entity;
 import jakarta.persistence.*;
 import lombok.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.CRC32;
 
 import com.scsac.app.dto.Article;
+import com.scsac.app.repository.CommentRepository;
 
 @Entity
 @Table(name = "article")
 @Getter
 @Setter
-@NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ArticleEntity {
-
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,8 +46,25 @@ public class ArticleEntity {
 
     @Column(columnDefinition = "INT DEFAULT 0")
     private int isUpdated;
+
+	public static ArticleEntity toEntity(Article a) {
+		
+	    UserEntity userEntity = new UserEntity();
+	    userEntity.setId(a.getUserId());
+
+	    CategoryEntity categoryEntity = new CategoryEntity();
+	    categoryEntity.setId(a.getCategoryId());
+
+		return new ArticleEntity().builder()
+					.id(a.getId())
+					.content(a.getContent())
+					.title(a.getTitle())
+					.user(userEntity)
+					.category(categoryEntity)
+					.createdAt(a.getCreatedAt())
+					.views(a.getViews())
+					.isUpdated(a.getIsUpdated()).build();
+	}
     
-    public static Article toDto(ArticleEntity ae) {
-    	return new Article(ae.getId(), ae.getCategory().getId(), ae.getTitle(), ae.getUser().getId(), ae.getContent(), ae.getCreatedAt(), ae.getViews(), ae.getIsUpdated());
-    }
+
 }

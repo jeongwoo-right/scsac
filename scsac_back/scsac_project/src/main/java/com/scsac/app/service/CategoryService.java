@@ -14,4 +14,6 @@ public interface CategoryService {
 
 	List<ArticleEntity> getArticlesByCategoryId(Long id);
 
+	void deleteCategory(Long id);
+
 }

@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `scsac`.`category` (
   `title` VARCHAR(255) NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 3
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `scsac`.`article` (
     FOREIGN KEY (`category_id`)
     REFERENCES `scsac`.`category` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 2
+AUTO_INCREMENT = 1
 DEFAULT CHARACTER SET = utf8mb3;
 
 

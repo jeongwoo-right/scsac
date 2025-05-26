@@ -3,6 +3,7 @@ package com.scsac.app.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +50,15 @@ public class CategoryController {
 		if (saved==null) {
 			return ResponseEntity.badRequest().build();
 		} else {
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok(saved);
 		}
 	}
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteCategory(@PathVariable("id") Long id){
+		cs.deleteCategory(id);
+		return ResponseEntity.ok().build();
+	}
+	
+	
 }

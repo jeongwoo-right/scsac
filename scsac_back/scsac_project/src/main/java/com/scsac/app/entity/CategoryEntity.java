@@ -1,5 +1,7 @@
 package com.scsac.app.entity;
 
+import java.util.Optional;
+
 import com.scsac.app.dto.Category;
 
 import jakarta.persistence.Entity;
@@ -28,7 +30,8 @@ public class CategoryEntity {
 	
 	private String title;
 	
-	public static Category toDto(CategoryEntity c) {
-		return new Category(c.id, c.title);
+	public CategoryEntity toEntity(Category c) {
+		return new CategoryEntity(c.getId(), c.getTitle());
 	}
+
 }
