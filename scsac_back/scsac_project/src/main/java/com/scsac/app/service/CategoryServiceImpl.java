@@ -26,7 +26,7 @@ public class CategoryServiceImpl implements CategoryService {
 		List<CategoryEntity> ces = cr.findAll();
 		List<Category> cs = new ArrayList<>();
 		for (CategoryEntity ce : ces) {
-			cs.add(CategoryEntity.toDto(ce));
+			cs.add(Category.toDto(ce));
 		}
 		return cs;
 	}
@@ -44,6 +44,11 @@ public class CategoryServiceImpl implements CategoryService {
 	public List<ArticleEntity> getArticlesByCategoryId(Long id) {
 		List<ArticleEntity> articles = ar.findAllByCategoryId(id);
 		return articles;
+	}
+
+	@Override
+	public void deleteCategory(Long id) {
+		cr.deleteById(id);
 	}
 
 }

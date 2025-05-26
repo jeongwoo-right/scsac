@@ -18,7 +18,9 @@ public class Category {
 	private Long id;
 	private String title;
 	
-	public CategoryEntity toEntity(Category c) {
-		return new CategoryEntity(c.id, c.title);
+	
+	public static Category toDto(CategoryEntity c) {
+		return new Category(c.getId(), c.getTitle());
 	}
+
 }
