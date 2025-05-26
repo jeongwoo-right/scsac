@@ -3,6 +3,7 @@ import type { RootState } from "../store"
 import { useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
 import api from "../api/axios"
+import '../components/WritePage.css'
 
 
 function WritePage() {
@@ -26,12 +27,13 @@ function WritePage() {
         categoryId: Number(id),
         userId: user.id,
       })
+
       alert("✅ 게시글이 등록되었습니다.")
-      navigate(`/category/${id}`)
+      navigate(`/category/${id}`) /** 경로, detail로 이동하도록 변경하기 */
     } 
     
     catch(err) {
-      alert("✅ 게시글이 등록되었습니다.")
+      alert("게시글 작성 실패")
     }
 
   }
