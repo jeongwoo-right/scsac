@@ -3,6 +3,7 @@
 -- 2400 : 정보 있음 / 시험 전
 -- 2401 : 정보 있음 / 시험 후
 -- 2500 : 정보 없음 / 시험 전
+use scsac;
 
 INSERT INTO `scsac`.`user` (`id`, `password`, `authority`, `generation`, `affiliate`, `name`, `nickname`, `boj_id`) VALUES ('2406', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', '1', '24', 'DX', '김혜민', 'hyenem', 'hyenem');
 INSERT INTO `scsac`.`user` (`id`, `password`, `authority`, `generation`, `affiliate`, `name`, `nickname`, `boj_id`) VALUES ('2402', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', '1', '24', 'DX', '김승기', 'testfirst', 'testfirst');
@@ -32,5 +33,3 @@ INSERT INTO article (category_id, title, user_id, content, created_at, views, is
 (4, '알고리즘 스터디 모집', 2400, '백준 골드 이상 문제 위주로 진행합니다.', '2024-05-23 15:20:00', 39, 0);
 
 select * from category;
-
-select * from article

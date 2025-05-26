@@ -5,6 +5,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import CategoryListPage from './pages/CategoryListPage'
 import BoardPage from './pages/BoardPage'
 import WritePage from './pages/WritePage'
+import SidebarLayout from './components/SidebarLayout'
+import ArticleDetailPage from './pages/ArticleDetailPage'
 
 function App() {
   return (
@@ -13,9 +15,12 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<LoginPage />} />
-        <Route path="/category" element={<CategoryListPage />} />
-        <Route path="/category/:id" element={<BoardPage />} />
-        <Route path="/category/:id/write" element={<WritePage />} />
+        <Route element={<SidebarLayout />}>
+          <Route path="/category" element={<CategoryListPage />} />
+          <Route path="/category/:id" element={<BoardPage />} />
+          <Route path="/category/:id/write" element={<WritePage />} />
+          <Route path="article/:id" element={<ArticleDetailPage />} />
+        </Route>
 
       </Routes>
     </BrowserRouter>
