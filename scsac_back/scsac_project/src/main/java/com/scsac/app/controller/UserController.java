@@ -51,7 +51,7 @@ public class UserController {
 		}
 	}
 
-	@PutMapping("/user")
+	@PutMapping("/")
 	public ResponseEntity<?> update(@AuthenticationPrincipal UserPrincipal loginUser ,@RequestBody User user) {
 		if(loginUser==null) {
 			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
