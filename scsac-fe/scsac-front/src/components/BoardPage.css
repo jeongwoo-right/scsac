@@ -1,0 +1,25 @@
+.board-container {
+  padding: 40px;
+}
+
+.board-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.board-table th,
+.board-table td {
+  padding: 12px;
+  border-bottom: 1px solid #ccc;
+  text-align: left;
+}
+
+.board-table th {
+  background-color: #f1f1f1;
+  font-weight: bold;
+}
+
+.board-table tr:hover {
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
