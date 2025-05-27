@@ -8,6 +8,8 @@ import WritePage from './pages/WritePage'
 import SidebarLayout from './components/SidebarLayout'
 import ArticleDetailPage from './pages/ArticleDetailPage'
 import Admin from './pages/Admin'
+import PrivateRoute from './components/PrivateRoute'
+
 
 function App() {
   return (
@@ -15,13 +17,16 @@ function App() {
     <BrowserRouter>
       <Header />
       <Routes>
+        {/* 누구나 접근 가능한 로그인 페이지 */}  
+        {/* path에 '/'있으면 루트부터 시작하는 절대경로 */}
         <Route path="/" element={<LoginPage />} />
+      
         <Route element={<SidebarLayout />}>
-          <Route path="/admin" element={<Admin/>}/>
-          <Route path="/category" element={<CategoryListPage />} />
-          <Route path="/category/:id" element={<BoardPage />} />
-          <Route path="/category/:id/write" element={<WritePage />} />
-          <Route path="article/:id" element={<ArticleDetailPage />} />
+          <Route path="/admin" element={<PrivateRoute><Admin/></PrivateRoute>}/>
+          <Route path="/category" element={<PrivateRoute><CategoryListPage /></PrivateRoute>} />
+          <Route path="/category/:id" element={<PrivateRoute><BoardPage /></PrivateRoute>} />
+          <Route path="/category/:id/write" element={<PrivateRoute><WritePage /></PrivateRoute>} />
+          <Route path="/article/:id" element={<PrivateRoute><ArticleDetailPage /></PrivateRoute>} />
         </Route>
 
       </Routes>

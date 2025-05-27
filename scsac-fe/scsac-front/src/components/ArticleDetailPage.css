@@ -32,3 +32,55 @@ button {
   border-radius: 6px;
   cursor: pointer;
 }
+
+/* 버튼 영역 레이아웃 */
+.article-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+/* 공통 버튼 스타일 */
+.article-buttons button {
+  font-family: 'Pretendard', sans-serif;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+/* 뒤로가기 버튼 */
+.back-button {
+  background-color: #e2e8f0;
+  color: #1a202c;
+}
+.back-button:hover {
+  background-color: #cbd5e1;
+}
+
+/* 수정 버튼 */
+.edit-button {
+  background-color: #4c51bf;
+  color: white;
+  margin-right: 8px;
+}
+.edit-button:hover {
+  background-color: #434190;
+}
+
+/* 삭제 버튼 */
+.delete-button {
+  background-color: #e53e3e;
+  color: white;
+}
+.delete-button:hover {
+  background-color: #c53030;
+}
+
+/* 버튼 묶음 오른쪽 정렬 */
+.action-buttons {
+  display: flex;
+}
