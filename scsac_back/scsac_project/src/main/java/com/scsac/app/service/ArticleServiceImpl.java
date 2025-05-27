@@ -55,4 +55,16 @@ public class ArticleServiceImpl implements ArticleService {
 	    article.setViews(article.getViews() + 1);
 	}
 
+	@Override
+	@Transactional
+	public ArticleResponseDto putArticle(Long id, ArticleRequestDto article) {
+		ArticleEntity ae = ar.findById(id)
+							.orElseThrow(()->new NoSuchElementException("해당 게시들이 존재하지 않습니다. id="+id));
+		ae.setIsUpdated(1);
+		ae.setTitle(article.getTitle());
+		ae.setContent(article.getContent());
+		ae.setCategory(CategoryEntity.builder().id(article.getCategoryId()).build());
+		return am.toDto(ae);
+	}
+
 }
