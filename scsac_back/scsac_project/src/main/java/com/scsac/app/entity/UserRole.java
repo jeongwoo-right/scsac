@@ -7,12 +7,8 @@ public enum UserRole {
 	AFTERTEST;
 	
     public static UserRole transform(int authorityNum, String name) {
-        if (authorityNum == 1) {
-        	return ADMIN;
-        } else {
-        	if(name==null) return READY;
-        	else if (authorityNum == 2) return AFTERTEST;
-        	else return BEFORETEST;        		
-        }
+        if (authorityNum == 1) return ADMIN;
+        else if (authorityNum == 2) return AFTERTEST;
+        else return BEFORETEST;        		
     }
 }

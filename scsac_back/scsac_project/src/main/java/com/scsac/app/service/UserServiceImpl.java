@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.scsac.app.dto.User;
 import com.scsac.app.dto.request.UserRequestDto;
 import com.scsac.app.dto.response.UserResponseDto;
 import com.scsac.app.entity.UserEntity;
