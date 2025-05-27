@@ -2,6 +2,7 @@ package com.scsac.app.controller;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -47,6 +48,17 @@ public class ArticleController {
 	public ResponseEntity<?> modifyArticle(@PathVariable("id") Long id, @RequestBody ArticleRequestDto article){
 		ArticleResponseDto saved = as.putArticle(id, article);
 		return ResponseEntity.ok(saved);
+	}
+	
+	@PreAuthorize("hasPermission(#id, 'article', 'write')")
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteArticle(@PathVariable("id") Long id){
+		int r = 0;
+		r=as.deleteArticle(id);
+		if (r==0) {
+			return ResponseEntity.badRequest().build();
+		}
+		return ResponseEntity.ok().build();
 	}
 	
 }

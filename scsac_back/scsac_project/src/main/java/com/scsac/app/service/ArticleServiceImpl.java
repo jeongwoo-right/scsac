@@ -24,10 +24,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ArticleServiceImpl implements ArticleService {
 	
-	private final UserRepository ur;
 	private final ArticleRepository ar;
-	private final CategoryRepository ctr;
-	private final CommentRepository cr;
 	private final ArticleMapper am;
 	
 	
@@ -65,6 +62,13 @@ public class ArticleServiceImpl implements ArticleService {
 		ae.setContent(article.getContent());
 		ae.setCategory(CategoryEntity.builder().id(article.getCategoryId()).build());
 		return am.toDto(ae);
+	}
+
+	@Override
+	@Transactional
+	public int deleteArticle(Long id) {
+		ar.deleteById(id);
+		return 1;
 	}
 
 }
