@@ -14,4 +14,6 @@ public interface ArticleService {
 
 	ArticleResponseDto putArticle(Long id, ArticleRequestDto article);
 
+	int deleteArticle(Long id);
+
 }
