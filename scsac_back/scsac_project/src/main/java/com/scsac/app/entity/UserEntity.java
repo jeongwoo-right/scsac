@@ -1,7 +1,6 @@
 package com.scsac.app.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.scsac.app.dto.User;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,8 +49,4 @@ public class UserEntity {
 	@Column(length = 100)
 	private String bojId;
 
-	public static UserEntity toEntity(User u) {
-		return new UserEntity(u.getId(), u.getPassword(), u.getAuthority(), u.getGeneration(), u.getAffiliate(),
-				u.getName(), u.getNickname(), u.getBojId());
-	}
 }

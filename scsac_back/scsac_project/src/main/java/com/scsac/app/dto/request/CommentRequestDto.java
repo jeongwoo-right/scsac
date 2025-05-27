@@ -21,7 +21,6 @@ import lombok.Setter;
 @Builder
 public class CommentRequestDto {
 	
-	private Long id;
 	private String userId;
 	private Long articleId;
 	private String content;

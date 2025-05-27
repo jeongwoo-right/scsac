@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scsac.app.dto.User;
 import com.scsac.app.dto.request.UserRequestDto;
 import com.scsac.app.dto.response.UserResponseDto;
 import com.scsac.app.entity.UserEntity;
@@ -87,7 +86,7 @@ public class UserController {
 			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 		}
 	}
-//	
+
 //	@PutMapping("/add_admin")
 //	@PreAuthorize("hasRole('ADMIN')")
 //	public ResponseEntity<?> updateAdmin(@RequestParam String id) {

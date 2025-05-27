@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
@@ -14,6 +15,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.scsac.app.security.JwtAuthenticaionFilter;
+import com.scsac.app.security.MustUpdateAuthorizationManager;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 
 	private final JwtAuthenticaionFilter jwtAuthenticationFilter;
+	private final MustUpdateAuthorizationManager mustUpdateAuthorizationManager;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -40,7 +43,8 @@ public class SecurityConfig {
 						)
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/login").permitAll()
-						.anyRequest().authenticated()
+						.requestMatchers(HttpMethod.PUT, "/user").authenticated()
+						.anyRequest().access(mustUpdateAuthorizationManager)
 						)
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
 				.build();
