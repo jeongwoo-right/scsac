@@ -9,6 +9,7 @@ import SidebarLayout from './components/SidebarLayout'
 import ArticleDetailPage from './pages/ArticleDetailPage'
 import Admin from './pages/Admin'
 import PrivateRoute from './components/PrivateRoute'
+import ArticleEditPage from './pages/ArticleEditPage'
 
 
 function App() {
@@ -27,6 +28,7 @@ function App() {
           <Route path="/category/:id" element={<PrivateRoute><BoardPage /></PrivateRoute>} />
           <Route path="/category/:id/write" element={<PrivateRoute><WritePage /></PrivateRoute>} />
           <Route path="/article/:id" element={<PrivateRoute><ArticleDetailPage /></PrivateRoute>} />
+          <Route path="/article/:id/edit" element={<PrivateRoute><ArticleEditPage/></PrivateRoute>}/>
         </Route>
 
       </Routes>
