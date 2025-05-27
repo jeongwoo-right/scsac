@@ -49,8 +49,12 @@ function SidebarLayout() {
     <div className="layout-container">
       <aside className="sidebar">
         { isAdmin &&
-          <button onClick={()=>navigate(`/admin`)}>관리자 페이지</button>
+            <button className="admin-btn" onClick={()=>navigate(`/admin`)}>
+              🛡️ 관리자 페이지
+            </button>
         }
+        <hr className="sidebar-divider" />
+
         <h3>📂 게시판 목록</h3>
         <button className="open-modal-btn" onClick={() => setIsModalOpen(true)}>
           ➕ 게시판 생성

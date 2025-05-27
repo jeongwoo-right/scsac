@@ -37,3 +37,49 @@
 * {
   box-sizing: border-box;
 }
+
+/* 기본 버튼 스타일 통일 */
+.sidebar .open-modal-btn,
+.sidebar .admin-btn {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+/* 게시판 생성 버튼 */
+.sidebar .open-modal-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.sidebar .open-modal-btn:hover {
+  background-color: #0056b3;
+}
+
+/* 관리자 버튼은 강조 색상 변경 */
+.sidebar .admin-btn {
+  background-color: rgb(161, 158, 158); /* 노란색 */
+  color: #212529;             /* 짙은 텍스트 */
+}
+
+.sidebar .admin-btn:hover {
+  background-color: gray;
+}
+
+.sidebar .admin-section {
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+  border-bottom: 1px solid #ccc;
+}
+
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 16px 0;
+}
