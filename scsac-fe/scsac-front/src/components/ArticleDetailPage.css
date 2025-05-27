@@ -84,3 +84,76 @@ button {
 .action-buttons {
   display: flex;
 }
+
+.comment-section {
+  margin-top: 32px;
+  padding: 16px;
+  border-top: 1px solid #ddd;
+}
+
+.comment-list {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 16px;
+}
+
+.comment-item {
+  margin-bottom: 10px;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #333;
+}
+
+.comment-time {
+  margin-left: 8px;
+  color: #888;
+  font-size: 0.85em;
+}
+
+.comment-form {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.comment-submit {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.comment-submit:hover {
+  background-color: #0056b3;
+}
+
+.no-comment {
+  color: #888;
+  font-style: italic;
+}
+
+.delete-icon {
+  cursor: pointer;
+  color: #888;
+  margin-left: 8px;
+  font-size: 18px;
+  transition: color 0.2s ease;
+}
+
+.delete-icon:hover {
+  color: #d32f2f;
+}
