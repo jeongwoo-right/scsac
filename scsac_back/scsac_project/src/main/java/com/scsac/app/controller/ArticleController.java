@@ -1,14 +1,17 @@
 package com.scsac.app.controller;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scsac.app.dto.request.ArticleRequestDto;
+import com.scsac.app.dto.request.UserRequestDto;
 import com.scsac.app.dto.response.ArticleResponseDto;
 import com.scsac.app.service.ArticleService;
 
@@ -38,4 +41,12 @@ public class ArticleController {
 		ArticleResponseDto saved = as.addArticle(article);
 		return ResponseEntity.ok(saved);
 	}
+	
+	@PreAuthorize("hasPermission(#id, 'article', 'write')")
+	@PutMapping("/{id}")
+	public ResponseEntity<?> modifyArticle(@PathVariable("id") Long id, @RequestBody ArticleRequestDto article){
+		ArticleResponseDto saved = as.putArticle(id, article);
+		return ResponseEntity.ok(saved);
+	}
+	
 }

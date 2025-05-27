@@ -12,4 +12,6 @@ public interface ArticleService {
 
 	void increaseViewCount(Long articleId);
 
+	ArticleResponseDto putArticle(Long id, ArticleRequestDto article);
+
 }
