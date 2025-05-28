@@ -140,7 +140,7 @@ function ArticleDetailPage() {
       {/* ✅ 게시글 섹션 */}
       <h2>{article.title}</h2>
       <div className="article-meta">
-        👤 작성자: {article.user.name}({article.user.affiliate}) | 🕒 {article.created_at} | 👁️ {article.views} 조회
+        👤 작성자: {article.user.name}({article.user.affiliate}) | 🕒 {new Date(article.created_at).toLocaleString()} | 👁️ {article.views} 조회
       </div>
       <div className="article-content"> {article.content} </div>
       

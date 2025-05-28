@@ -1,0 +1,139 @@
+/* 📁 MyPage.css */
+
+.mypage-container {
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 40px;
+  background: linear-gradient(to bottom right, #fefefe, #f0f4ff);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  font-family: 'Noto Sans KR', sans-serif;
+  transition: all 0.3s ease;
+}
+
+.mypage-container h2 {
+  text-align: center;
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+.mypage-info {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.mypage-info p {
+  background-color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+
+.mypage-info p:hover {
+  transform: scale(1.02);
+  background-color: #f9f9ff;
+}
+
+.mypage-info strong {
+  color: #555;
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.edit-button {
+  margin-top: 30px;
+  padding: 12px 20px;
+  background-color: #4f68ff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  cursor: pointer;
+  align-self: center;
+  transition: background-color 0.3s ease;
+  box-shadow: 0 5px 15px rgba(79, 104, 255, 0.3);
+}
+
+.edit-button:hover {
+  background-color: #3a50cc;
+}
+
+
+/* ✅ 모달 관련 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.modal-content h3 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  color: #222;
+}
+
+.modal-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal-buttons button {
+  padding: 8px 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background-color: #4f68ff;
+  color: white;
+  transition: background-color 0.2s ease;
+}
+
+.modal-buttons button:hover {
+  background-color: #3a50cc;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
