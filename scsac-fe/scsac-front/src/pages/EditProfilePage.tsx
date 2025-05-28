@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import type { RootState } from '../store'
 import api from '../api/axios'
 import '../components/EditProfilePage.css'
+import { login } from '../store/userSlice'
 
 const EditProfile: React.FC = () => {
   const user = useSelector((state: RootState) => state.user)
   const navigate = useNavigate()
   const location = useLocation()
   const passwordFromPrev = location.state?.password || ''
+  const dispatch = useDispatch()
 
   const [form, setForm] = useState({
     id: user.id || '',
@@ -18,7 +20,7 @@ const EditProfile: React.FC = () => {
     affiliate: user.affiliate || '',
     generation: user.generation || 0,
     nickname: user.nickname || '',
-    bojId: user.boj_id || '',
+    boj_id: user.boj_id || '',
     password: passwordFromPrev,
   })
 
@@ -39,9 +41,12 @@ const EditProfile: React.FC = () => {
       return
     }
 
+
+
     try {
       const res = await api.put(`/user`, form)
-      
+      dispatch(login(res.data))
+      console.log(res.data)
       alert('회원정보가 수정되었습니다.')
       navigate('/mypage')
     } 
@@ -71,7 +76,7 @@ const EditProfile: React.FC = () => {
         <input type="text" name="nickname" value={form.nickname} onChange={handleChange} /><br />
 
         <label>BOJ 아이디</label><br />
-        <input type="text" name="bojId" value={form.bojId} onChange={handleChange} /><br />
+        <input type="text" name="boj_id" value={form.boj_id} onChange={handleChange} /><br />
 
         {error && <p className="error-text">{error}</p>}
 

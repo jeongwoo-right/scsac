@@ -48,9 +48,10 @@ public class CategoryServiceImpl implements CategoryService {
 		Pageable pageable = null;
 		switch(sort) {
 		case("viewCount") : pageable = PageRequest.of(page, size, Sort.by("views").descending()); break;
-		case("datedDesc") : pageable = PageRequest.of(page, size, Sort.by("createdAt").descending()); break;
+		case("dateDesc") : pageable = PageRequest.of(page, size, Sort.by("createdAt").descending()); break;
 		case("dateAsc") : pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending()); break;
 		}
+		System.out.println(pageable);
 
 		Page<ArticleEntity> articles = null;
 	    if (keyword == null || keyword.trim().isEmpty()) {

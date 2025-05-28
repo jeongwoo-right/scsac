@@ -19,7 +19,7 @@ function SidebarLayout() {
   const [newCategory, setNewCategory] = useState("")
   const navigate = useNavigate()
 
-  const isAdmin = useSelector((state: RootState) => state.user.authority)===1;
+  const isAdmin = useSelector((state: RootState) => state.user.authority)===0;
 
   const fetchCategories = async () => {
     const res = await api.get('/category')
@@ -45,10 +45,12 @@ function SidebarLayout() {
       alert("❌ 생성 실패")
     } 
   }
+
   return (
     <div className="layout-container">
       <aside className="sidebar">
-        { isAdmin &&
+        {/* { isAdmin && */}
+        {
             <button className="admin-btn" onClick={()=>navigate(`/admin`)}>
               🛡️ 관리자 페이지
             </button>
