@@ -3,12 +3,18 @@ package com.scsac.app.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.scsac.app.dto.request.CategoryRequestDto;
+import com.scsac.app.dto.response.ArticleResponseDto;
 import com.scsac.app.dto.response.CategoryResponseDto;
 import com.scsac.app.entity.ArticleEntity;
 import com.scsac.app.entity.CategoryEntity;
+import com.scsac.app.mapper.ArticleMapper;
 import com.scsac.app.mapper.CategoryMapper;
 import com.scsac.app.repository.ArticleRepository;
 import com.scsac.app.repository.CategoryRepository;
@@ -23,6 +29,7 @@ public class CategoryServiceImpl implements CategoryService {
 	private final CategoryRepository cr;
 	private final ArticleRepository ar;
 	private final CategoryMapper cm;
+	private final ArticleMapper am;
 
 	@Override
 	public List<CategoryResponseDto> getCategories() {
@@ -37,8 +44,15 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public List<ArticleEntity> getArticlesByCategoryId(Long id) {
-		List<ArticleEntity> articles = ar.findAllByCategoryId(id);
+	public Page<ArticleResponseDto> getArticlesByCategoryId(Long id, String sort, int page, int size) {
+		Pageable pageable = null;
+		switch(sort) {
+		case("viewCount") : pageable = PageRequest.of(page, size, Sort.by("views").descending()); break;
+		case("datedDesc") : pageable = PageRequest.of(page, size, Sort.by("createdAt").descending()); break;
+		case("dateAsc") : pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending()); break;
+		}
+
+		Page<ArticleResponseDto> articles = ar.findAllByCategoryId(id, pageable).map(am::toDto);
 		return articles;
 	}
 
