@@ -7,5 +7,6 @@ public interface UserService {
 	UserResponseDto findbyId(String id);
 	int insertUser(int num, int generation,String password);
 	UserResponseDto updateUser(UserRequestDto user);
-	int updateAuthority();
+	int updateAuthority(int generation);
+	UserResponseDto makeAdmin(String id);
 }
