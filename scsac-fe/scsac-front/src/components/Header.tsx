@@ -3,10 +3,6 @@ import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '../store'
 import { logout } from '../store/userSlice'
 import './Header.css'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBell } from '@fortawesome/free-solid-svg-icons'
-
-
 import { useNavigate } from 'react-router-dom'
 
 function Header() {

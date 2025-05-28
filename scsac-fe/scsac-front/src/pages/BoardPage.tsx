@@ -36,7 +36,7 @@ function BoardPage() {
       setTotalPages(res.data.totalPages)
       
     } catch (err) {
-      alert("게시글 불러오기 실패" + err)
+      alert("게시글 불러오기 실패: " + err)
     }
   }
 
