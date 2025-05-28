@@ -30,4 +30,6 @@ public class CategoryEntity {
 	@Column(length=255, nullable = false)
 	private String title;
 	
+	@Column(nullable = false)
+	private String authority;
 }

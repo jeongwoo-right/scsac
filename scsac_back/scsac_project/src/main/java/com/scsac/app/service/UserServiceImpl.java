@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
 				e.setId(String.format("%02d", generation) + String.format("%02d", i));
 				e.setPassword(pw.encode(password));
 				e.setGeneration(generation);
-				e.setAuthority(3);
+				e.setAuthority("ROLE_Student");
 
 				UserEntity saved = ur.save(e);
 				r += saved.getId() != null ? 1 : 0;
@@ -60,19 +60,17 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public int updateUser(UserRequestDto user) {
-		Optional<UserEntity> e = ur.findById(String.valueOf(user.getId()));
-		if (e.isEmpty())
-			return 0;
+	public UserResponseDto updateUser(UserRequestDto user) {
+		UserEntity usere = ur.findById(String.valueOf(user.getId()))
+									.orElseThrow(()-> new NoSuchElementException("해당 사용자가 없습니다."));
 
-		UserEntity tmp_user = e.get();
-		tmp_user.setPassword(pw.encode(user.getPassword()));
-		tmp_user.setAffiliate(user.getAffiliate());
-		tmp_user.setName(user.getName());
-		tmp_user.setNickname(user.getNickname());
-		tmp_user.setBojId(user.getBojId());
+		usere.setPassword(pw.encode(user.getPassword()));
+		usere.setAffiliate(user.getAffiliate());
+		usere.setName(user.getName());
+		usere.setNickname(user.getNickname());
+		usere.setBojId(user.getBojId());
 
-		return 1;
+		return um.toDto(usere);
 	}
 
 	@Override

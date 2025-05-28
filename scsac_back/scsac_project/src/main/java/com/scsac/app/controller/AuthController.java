@@ -21,7 +21,6 @@ import com.scsac.app.dto.request.LoginRequest;
 import com.scsac.app.dto.response.LoginResponseDto;
 import com.scsac.app.dto.response.UserResponseDto;
 import com.scsac.app.entity.UserEntity;
-import com.scsac.app.entity.UserRole;
 import com.scsac.app.mapper.UserMapper;
 import com.scsac.app.repository.UserRepository;
 import com.scsac.app.security.JwtTokenProvider;
@@ -47,7 +46,7 @@ public class AuthController {
 		UserEntity user = userRepository.findById(request.getId())
 							.orElseThrow(()-> new UsernameNotFoundException("사용자 없음"));
 		
-		String role = UserRole.transform(user.getAuthority(), user.getName()).name();
+		String role = user.getAuthority();
 		
 		String token = tokenProvider.generateToken(user.getId(), role);
 		

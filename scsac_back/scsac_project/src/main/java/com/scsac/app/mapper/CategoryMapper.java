@@ -12,6 +12,7 @@ public class CategoryMapper {
 	public static CategoryEntity toEntity(CategoryRequestDto categoryRequest) {
 		return CategoryEntity.builder()
 				.title(categoryRequest.getTitle())
+				.authority(categoryRequest.getAuthority())
 				.build();
 	}
 	
@@ -19,6 +20,7 @@ public class CategoryMapper {
 		return CategoryResponseDto.builder()
 				.id(categoryEntity.getId())
 				.title(categoryEntity.getTitle())
+				.authority(categoryEntity.getAuthority())
 				.build();
 	}
 }

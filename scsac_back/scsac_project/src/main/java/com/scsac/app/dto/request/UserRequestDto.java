@@ -14,7 +14,7 @@ import lombok.Setter;
 public class UserRequestDto {
 	private String id;
 	private String password;
-	private int authority;
+	private String authority;
 	private int generation;
 
 	private String affiliate;

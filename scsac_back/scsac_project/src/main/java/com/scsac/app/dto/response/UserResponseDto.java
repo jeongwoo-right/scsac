@@ -13,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserResponseDto {
 	private String id;
-	private int authority;
+	private String authority;
 	private int generation;
 
 	private String affiliate;

@@ -32,7 +32,7 @@ public class UserEntity {
 	private String password;
 
 	@Column(nullable=false, columnDefinition = "INT DEFAULT 3")
-	private int authority;
+	private String authority;
 
 	@Column(nullable = false)
 	private int generation;
