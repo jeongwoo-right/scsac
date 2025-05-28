@@ -44,6 +44,12 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("/me")
+	public ResponseEntity<?> me(){
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return detail(auth.getName());
+	}
+	
 	@PostMapping
 	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<?> insert(@RequestBody Map<String, String> data) {
