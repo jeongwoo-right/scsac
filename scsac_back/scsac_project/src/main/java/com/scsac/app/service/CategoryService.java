@@ -18,5 +18,5 @@ public interface CategoryService {
 
 	CategoryResponseDto addCategory(CategoryRequestDto category);
 
-	Page<ArticleResponseDto> getArticlesByCategoryId(Long id, String sort, int page, int size);
+	Page<ArticleResponseDto> getArticlesByCategoryId(Long id, String sort, int page, int size, String condition, String keyword);
 }

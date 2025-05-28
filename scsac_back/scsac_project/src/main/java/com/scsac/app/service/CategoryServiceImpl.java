@@ -44,7 +44,7 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 
 	@Override
-	public Page<ArticleResponseDto> getArticlesByCategoryId(Long id, String sort, int page, int size) {
+	public Page<ArticleResponseDto> getArticlesByCategoryId(Long id, String sort, int page, int size, String condition, String keyword) {
 		Pageable pageable = null;
 		switch(sort) {
 		case("viewCount") : pageable = PageRequest.of(page, size, Sort.by("views").descending()); break;
@@ -52,8 +52,17 @@ public class CategoryServiceImpl implements CategoryService {
 		case("dateAsc") : pageable = PageRequest.of(page, size, Sort.by("createdAt").ascending()); break;
 		}
 
-		Page<ArticleResponseDto> articles = ar.findAllByCategoryId(id, pageable).map(am::toDto);
-		return articles;
+		Page<ArticleEntity> articles = null;
+	    if (keyword == null || keyword.trim().isEmpty()) {
+	        articles = ar.findAllByCategoryId(id, pageable);
+	    } else {
+	        articles = switch (condition) {
+	            case "title" -> ar.findAllByCategoryIdAndTitleContaining(id, keyword, pageable);
+	            case "writer" -> ar.findAllByCategoryIdAndUser_NameContaining(id, keyword, pageable);
+	            default -> ar.findAllByCategoryId(id, pageable);
+	        };
+	    }
+		return articles.map(am::toDto);
 	}
 
 	@Override
