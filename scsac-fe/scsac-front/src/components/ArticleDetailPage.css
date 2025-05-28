@@ -62,21 +62,22 @@ button {
 }
 
 /* 수정 버튼 */
-.edit-button {
+.editing-button {
   background-color: #4c51bf;
   color: white;
   margin-right: 8px;
 }
-.edit-button:hover {
+
+.editing-button:hover {
   background-color: #434190;
 }
 
 /* 삭제 버튼 */
-.delete-button {
+.deleting-button {
   background-color: #e53e3e;
   color: white;
 }
-.delete-button:hover {
+.deleting-button:hover {
   background-color: #c53030;
 }
 

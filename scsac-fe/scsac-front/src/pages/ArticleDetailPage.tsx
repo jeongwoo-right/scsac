@@ -144,15 +144,18 @@ function ArticleDetailPage() {
       </div>
       <div className="article-content"> {article.content} </div>
       
+
       <div className="article-buttons">
         <button className="back-button" onClick={() => navigate(`/category/${article.category.id}`, {replace: true})}>← 뒤로가기</button>
+        
         {article.user.id == Number(user.id) && (
           <div className="action-buttons">
-            <button className="edit-button" onClick={()=> navigate(`/article/${article.id}/edit`, {replace: true})}>수정</button>
-            <button className="delete-button" onClick={handleDelete}>삭제</button>
+            <button className="editing-button" onClick={()=> navigate(`/article/${article.id}/edit`, {replace: true})}>수정</button>
+            <button className="deleting-button" onClick={handleDelete}>삭제</button>
           </div>
         )}
       </div>
+
       
       {/* ✅ 댓글 섹션 */}
       <div className="comment-section">

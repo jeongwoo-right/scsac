@@ -5,7 +5,7 @@ export type UserState = {
   isLoggedIn: boolean
   id: string
   password: string
-  authority: number
+  authority: string
   generation: number
   affiliate: string
   name: string | null
@@ -18,7 +18,7 @@ const initialState: UserState = {
   isLoggedIn: false,
   id: '0',
   password: '',
-  authority: 3,
+  authority: "ROLE_Student",
   generation: 0,
   affiliate: '',
   name: null,

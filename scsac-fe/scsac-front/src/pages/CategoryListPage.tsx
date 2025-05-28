@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import '../components/CategoryListPage.css'
+import scsacLogo from '../assets/scsac.png'  // ✅ 이미지 import
 
 
 // SCSAC-Board의 메인페이지
@@ -61,7 +62,13 @@ function CategoryListPage() {
       </main>
 
     </div>
-  )
+      // <div className="category-page">
+      //   <div className="main-logo-container">
+      //     <img src={scsacLogo} alt="SCSAC 로고" className="main-logo" />
+      //   </div>
+      // </div>
+    )
+    
 
 }
 

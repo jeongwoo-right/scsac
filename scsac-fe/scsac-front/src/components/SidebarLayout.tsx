@@ -17,9 +17,13 @@ function SidebarLayout() {
   const [categories, setCategories] = useState<Category[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [newCategory, setNewCategory] = useState("")
+
+  
+  const [selectedAuthority, setSelectedAuthority] = useState<string[]>([]);
+
   const navigate = useNavigate()
 
-  const isAdmin = useSelector((state: RootState) => state.user.authority)===1;
+  const isAdmin = useSelector((state: RootState) => state.user.authority==="ROLE_Admin");
 
   const fetchCategories = async () => {
     const res = await api.get('/category')
@@ -27,6 +31,16 @@ function SidebarLayout() {
   }
 
   useEffect(() => {fetchCategories()}, [])
+
+  const handleAuthorityToggle = (authority: string) => {
+    setSelectedAuthority(prev =>
+      prev.includes(authority)
+        ? prev.filter(a => a !== authority)
+        : [...prev, authority]
+    );
+  };
+
+  
 
   const handleCreateCategory = async () => {
     if (!newCategory.trim()) {
@@ -36,6 +50,7 @@ function SidebarLayout() {
   
 
     try {
+      // 접근 권한 post 요청으로 보내기
       await api.post("/category", {title: newCategory})
       alert("✅ 게시판이 생성되었습니다!")
       setNewCategory("")
@@ -45,6 +60,7 @@ function SidebarLayout() {
       alert("❌ 생성 실패")
     } 
   }
+
   return (
     <div className="layout-container">
       <aside className="sidebar">
@@ -71,6 +87,7 @@ function SidebarLayout() {
         <Outlet />
       </main>
 
+      {/* 게시판 생성 모달 */}
       {isModalOpen && (
         <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
           <div className="modal" onClick={(e) => e.stopPropagation()}>
@@ -81,6 +98,22 @@ function SidebarLayout() {
               placeholder="게시판 이름"
               onChange={(e) => setNewCategory(e.target.value)}
             />
+            
+    
+          {/* 접근 권한 */}
+          <div className="access-roles">
+            <label>접근 권한:</label>
+            <div className="checkbox-row">
+              <label>
+                <input type="checkbox" value="ROLE_Student" checked={selectedAuthority.includes("ROLE_Student")} onChange={() => handleAuthorityToggle("ROLE_Student")}/>
+                재학생
+              </label>
+              <label>
+                <input type="checkbox" value="ROLE_Graduate" checked={selectedAuthority.includes("ROLE_Graduate")} onChange={() => handleAuthorityToggle("ROLE_Graduate")}/>
+                졸업생
+              </label>
+            </div>
+          </div>
             <div className="modal-buttons">
               <button onClick={handleCreateCategory}>생성</button>
               <button onClick={() => setIsModalOpen(false)}>취소</button>

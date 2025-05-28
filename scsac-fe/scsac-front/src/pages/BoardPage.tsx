@@ -22,21 +22,26 @@ function BoardPage() {
   const [articles, setArticles] = useState<ArticleSummary[]>([])
   const [page, setPage] = useState(0) // 백엔드는 0-indexed
   const [size, setSize] = useState(10) // 몇개씩 볼건지
-  const [sort, setSort] = useState("created_at") // "created_at" 또는 "views"
+  const [sort, setSort] = useState("dateDesc") // "created_at" 또는 "views"
   const [condition, setCondition] = useState("title") // title 또는 writer
   const [keyword, setKeyword] = useState("")
   const [totalPages, setTotalPages] = useState(0)
+  const [loading, setLoading] = useState(true)
 
 
   const navigate = useNavigate()
   const fetchBoard = async () => {
     try {
+      // alert("게시글 정렬 시작")
       const res = await api.get(`/category/${categoryId}`, {params: {page, size, sort, condition, keyword}});
       setArticles(res.data.content)
       setTotalPages(res.data.totalPages)
+      console.log(res.data)
       
     } catch (err) {
-      alert("게시글 불러오기 실패" + err)
+      alert("게시글 불러오기 실패: " + err)
+    }  finally {
+      setLoading(false)
     }
   }
 
@@ -45,7 +50,9 @@ function BoardPage() {
     fetchBoard()
   }, [id, page, size, sort, condition, keyword])
 
-  
+  if (loading)
+    return 
+
   return (
     <div className="board-container">
       <div className="board-header">
@@ -72,6 +79,28 @@ function BoardPage() {
           <option value="30">30개씩 보기</option>
         </select>
 
+      </div>
+
+      {/* 정렬 버튼 추가 */}
+      <div className="board-sorting">
+        <button
+          className={sort === "dateDesc" ? "active" : ""}
+          onClick={() => { setSort("dateDesc"); setPage(0); }}
+        >
+          최신순
+        </button>
+        <button
+          className={sort === "dateAsc" ? "active" : ""}
+          onClick={() => { setSort("dateAsc"); setPage(0); }}
+        >
+          오래된순
+        </button>
+        <button
+          className={sort === "viewCount" ? "active" : ""}
+          onClick={() => { setSort("viewCount"); setPage(0); }}
+        >
+          조회수순
+        </button>
       </div>
 
       
