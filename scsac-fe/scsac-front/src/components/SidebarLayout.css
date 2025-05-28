@@ -83,3 +83,30 @@
   border-top: 1px solid #ccc;
   margin: 16px 0;
 }
+
+
+/* 접근 권한 */
+
+.access-roles {
+  margin-top: 12px;
+}
+
+.access-roles > label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.checkbox-row {
+  display: flex;
+  gap: 20px; /* 간격 조절 */
+  align-items: center;
+  margin-top: 4px;
+}
+
+.checkbox-row label {
+  display: flex;
+  align-items: center;
+  gap: 6px; /* 체크박스와 텍스트 사이 간격 */
+  font-weight: normal;
+}
