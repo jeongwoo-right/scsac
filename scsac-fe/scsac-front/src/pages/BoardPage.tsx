@@ -53,7 +53,7 @@ function BoardPage() {
             <tr key={article.id} onClick={()=>navigate(`/article/${article.id}`)}>
               <td>{article.title}</td>
               <td>{article.views}</td>
-              <td>{article.created_at}</td>
+              <td>{new Date(article.created_at).toLocaleString()}</td>
             </tr>
           ))}
         </tbody>
