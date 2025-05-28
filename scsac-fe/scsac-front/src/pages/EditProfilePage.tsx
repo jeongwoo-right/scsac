@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { useNavigate, useLocation } from 'react-router-dom'
 import type { RootState } from '../store'
 import api from '../api/axios'
+import '../components/EditProfilePage.css'
 
 const EditProfile: React.FC = () => {
   const user = useSelector((state: RootState) => state.user)
@@ -48,9 +49,9 @@ const EditProfile: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="edit-profile-container">
       <h2>회원정보 수정</h2>
-      <div>
+      <div className="edit-profile-form">
         <label>비밀번호</label><br />
         <input type="password" name="password" value={form.password} onChange={handleChange} /><br />
 
@@ -69,7 +70,7 @@ const EditProfile: React.FC = () => {
         <label>BOJ 아이디</label><br />
         <input type="text" name="bojId" value={form.bojId} onChange={handleChange} /><br />
 
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p className="error-text">{error}</p>}
 
         <button onClick={handleSubmit}>수정 완료</button>
       </div>

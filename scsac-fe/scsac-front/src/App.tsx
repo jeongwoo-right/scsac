@@ -12,7 +12,7 @@ import PrivateRoute from './components/PrivateRoute'
 import ArticleEditPage from './pages/ArticleEditPage'
 import MyPage from './pages/MyPage'
 import EditProfile from './pages/EditProfilePage'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import api from './api/axios'
 import { useDispatch } from 'react-redux'
 import { login, logout } from './store/userSlice'
@@ -20,12 +20,15 @@ import { login, logout } from './store/userSlice'
 
 function App() {
   const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const restoreUser = async () => {
       const token = localStorage.getItem("jwt")
-      if (!token) 
-        return
+
+      if (!token) {
+        setLoading(false)
+      }
 
       try {
         const res = await api.get("/user/me")
@@ -48,10 +51,16 @@ function App() {
         localStorage.removeItem("jwt")
         dispatch(logout())
       }
+
+      finally {
+        setLoading(false)
+      }
     }
 
     restoreUser()
   }, [dispatch])
+
+  if (loading) return null // 또는 로딩 스피너 컴포넌트
 
   return (
     <>
@@ -69,8 +78,8 @@ function App() {
           <Route path="/category/:id/write" element={<PrivateRoute><WritePage /></PrivateRoute>} />
           <Route path="/article/:id" element={<PrivateRoute><ArticleDetailPage /></PrivateRoute>} />
           <Route path="/article/:id/edit" element={<PrivateRoute><ArticleEditPage/></PrivateRoute>}/>
-          <Route path="/mypage" element={<MyPage />} />
-          <Route path="/editProfile" element={<EditProfile />} />
+          <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
+          <Route path="/editProfile" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
         </Route>
 
       </Routes>
