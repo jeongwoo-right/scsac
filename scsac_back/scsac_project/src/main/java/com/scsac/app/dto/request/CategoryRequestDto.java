@@ -17,4 +17,5 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CategoryRequestDto {
 	private String title;
+	private String authority;
 }

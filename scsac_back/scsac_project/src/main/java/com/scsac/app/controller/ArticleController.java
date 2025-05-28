@@ -26,6 +26,7 @@ public class ArticleController {
 	private final ArticleService as;
 	
 	@GetMapping("/{id}")
+	@PreAuthorize("hasPermission(#id, 'article', 'read')")
 	public ResponseEntity<?> getArticleById(@PathVariable("id") Long id){
 		ArticleResponseDto article = as.getArticleById(id);
 		if(article==null) {
@@ -37,20 +38,20 @@ public class ArticleController {
 	}
 	
 	@PostMapping
+	@PreAuthorize("hasPermission(#article.getCategoryId(), 'article', 'write')")
 	public ResponseEntity<?> addArticle(@RequestBody ArticleRequestDto article){
-		System.out.println(article);
 		ArticleResponseDto saved = as.addArticle(article);
 		return ResponseEntity.ok(saved);
 	}
 	
-	@PreAuthorize("hasPermission(#id, 'article', 'write')")
+	@PreAuthorize("hasPermission(#id, 'article', 'update')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> modifyArticle(@PathVariable("id") Long id, @RequestBody ArticleRequestDto article){
 		ArticleResponseDto saved = as.putArticle(id, article);
 		return ResponseEntity.ok(saved);
 	}
 	
-	@PreAuthorize("hasPermission(#id, 'article', 'write')")
+	@PreAuthorize("hasPermission(#id, 'article', 'update')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteArticle(@PathVariable("id") Long id){
 		int r = 0;

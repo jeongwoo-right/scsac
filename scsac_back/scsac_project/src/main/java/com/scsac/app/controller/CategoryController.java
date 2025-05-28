@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.scsac.app.dto.request.CategoryRequestDto;
 import com.scsac.app.dto.response.ArticleResponseDto;
 import com.scsac.app.dto.response.CategoryResponseDto;
-import com.scsac.app.entity.ArticleEntity;
-import com.scsac.app.entity.CategoryEntity;
 import com.scsac.app.service.CategoryService;
 
 import lombok.RequiredArgsConstructor;
@@ -37,6 +35,7 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/{id}")
+	@PreAuthorize("hasPermission(#id, 'category', 'read')")
 	public ResponseEntity<?> getArticleByCategory(@PathVariable("id") Long id,
 													@RequestParam String sort,
 													@RequestParam int page,

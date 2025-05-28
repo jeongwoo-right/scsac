@@ -14,6 +14,6 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
 	Optional<UserEntity> findById(String id); 
 	
 	@Modifying(clearAutomatically = true)
-	@Query("UPDATE UserEntity u SET u.authority= 2 WHERE u.authority=3")
+	@Query("UPDATE UserEntity u SET u.authority='ROLE_Student' WHERE u.authority='ROLE_Graduate'")
 	int updateAuthority();
 }
