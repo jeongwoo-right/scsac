@@ -59,8 +59,13 @@ function App() {
 
     restoreUser()
   }, [dispatch])
+  
 
-  if (loading) return null // 또는 로딩 스피너 컴포넌트
+
+  if (loading) 
+    return null // 또는 로딩 스피너 컴포넌트
+
+
 
   return (
     <>

@@ -67,7 +67,7 @@ function BoardPage() {
       <button onClick = {() => {setPage(0); fetchBoard()}}> 검색</button>      
 
       {/* 글을 한 페이지에 몇 개씩 볼 것인지 */}
-        <select value={size} onChange={(e) => setSize(Number(e.target.value))}>
+        <select value={size} onChange={(e) => {setSize(Number(e.target.value)); setPage(0)}}>
           <option value="3">3개씩 보기</option>
           <option value="30">30개씩 보기</option>
         </select>

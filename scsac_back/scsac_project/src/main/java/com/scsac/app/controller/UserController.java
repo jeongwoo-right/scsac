@@ -54,10 +54,6 @@ public class UserController {
 		}
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> ef3975113160bc6d5836b3c01d63da6f27d36369
 	@PutMapping
 	public ResponseEntity<?> update(@RequestBody UserRequestDto user) {
 		
