@@ -36,12 +36,14 @@ public class CategoryController {
 		return ResponseEntity.ok(categories);
 	}
 	
-	@GetMapping("/{id}/{sort}/{size}/{page}")
+	@GetMapping("/{id}")
 	public ResponseEntity<?> getArticleByCategory(@PathVariable("id") Long id,
-													@PathVariable("sort") String sort,
-													@PathVariable("page") int page,
-													@PathVariable("size") int size){
-		Page<ArticleResponseDto> articles = cs.getArticlesByCategoryId(id, sort, page, size);
+													@RequestParam String sort,
+													@RequestParam int page,
+													@RequestParam int size,
+													@RequestParam String condition,
+													@RequestParam String keyword){
+		Page<ArticleResponseDto> articles = cs.getArticlesByCategoryId(id, sort, page, size, condition, keyword);
 		return ResponseEntity.ok(articles);
 	}
 	
