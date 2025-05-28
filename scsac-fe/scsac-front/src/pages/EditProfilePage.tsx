@@ -40,10 +40,13 @@ const EditProfile: React.FC = () => {
     }
 
     try {
-      await api.put(`/user/user`, form)
+      const res = await api.put(`/user`, form)
+      
       alert('회원정보가 수정되었습니다.')
       navigate('/mypage')
-    } catch (err) {
+    } 
+    
+    catch (err) {
       setError('수정 중 오류가 발생했습니다.')
     }
   }

@@ -61,8 +61,7 @@ public class UserController {
 		}
 	}
 
-
-	@PutMapping("/")
+	@PutMapping
 	public ResponseEntity<?> update(@RequestBody UserRequestDto user) {
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
