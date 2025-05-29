@@ -35,16 +35,7 @@ function SidebarLayout() {
     }
   }
 
-  useEffect(() => {fetchCategories()}, [])
-
-  const handleAuthorityToggle = (authority: string) => {
-    setSelectedAuthority(prev =>
-      prev.includes(authority)
-        ? prev.filter(a => a !== authority)
-        : [...prev, authority]
-    );
-  };
-
+  useEffect(() => {fetchCategories()}, [user])
   
 
   const handleCreateCategory = async () => {

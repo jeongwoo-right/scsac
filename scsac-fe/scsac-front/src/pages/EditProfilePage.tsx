@@ -32,7 +32,9 @@ const EditProfile: React.FC = () => {
 
   const handleSubmit = async () => {
     const hasEmpty = Object.entries(form).some(([key, val]) => {
-      if (key === 'id') return false // id는 제외하고 검증
+      if (key === 'id' || key === 'boj_id')
+         return false // id는 제외하고 검증
+
       return typeof val === 'string' && val.trim() === ''
     })
 
@@ -41,12 +43,13 @@ const EditProfile: React.FC = () => {
       return
     }
 
-
-
     try {
       const res = await api.put(`/user`, form)
-      dispatch(login(res.data))
-      console.log(res.data)
+      const updatedUser = res.data
+      // const isProfileComplete = !!(updatedUser.name.trim() && updatedUser.nickname.trim() && updatedUser.affiliate.trim())
+      
+      dispatch(login(updatedUser))
+      console.log(user)
       alert('회원정보가 수정되었습니다.')
       navigate('/mypage')
     } 

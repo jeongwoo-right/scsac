@@ -17,6 +17,7 @@ import api from './api/axios'
 import { useDispatch } from 'react-redux'
 import { login, logout } from './store/userSlice'
 import PrivateRouteBypassProfileCheck from './components/PrivateRouteBypassProfileCheck'
+import RedirectIfLoggedInRoute from './components/RedirectIfLoggedInRoute'
 
 function App() {
   const dispatch = useDispatch()
@@ -77,7 +78,7 @@ function App() {
       <Routes>
         {/* 누구나 접근 가능한 로그인 페이지 */}  
         {/* path에 '/'있으면 루트부터 시작하는 절대경로 */}
-        <Route path="/" element={<LoginPage />} />
+        <Route path="/" element={<RedirectIfLoggedInRoute><LoginPage /></RedirectIfLoggedInRoute>} />
       
         <Route element={<SidebarLayout />}>
           <Route path="/admin" element={<PrivateRoute><Admin/></PrivateRoute>}/>

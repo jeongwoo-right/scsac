@@ -37,6 +37,9 @@ const userSlice = createSlice({
     login: (_, action: PayloadAction<Omit<UserState, 'isLoggedIn' | 'isProfileComplete'>>) => {
       const payload = action.payload
       const isProfileComplete = !!(payload.name && payload.nickname && payload.affiliate)
+      
+      console.log("페이로드: " + payload.name + payload.nickname + payload.affiliate)
+      console.log(isProfileComplete)
       return {
         isLoggedIn: true,
         isProfileComplete,
