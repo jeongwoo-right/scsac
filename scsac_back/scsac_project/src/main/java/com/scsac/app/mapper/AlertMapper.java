@@ -21,13 +21,27 @@ public class AlertMapper {
 	private final ArticleMapper am;
 	private final CommentMapper cm;
 	private final UserMapper um;
+	private final UserRepository ur;
+	private final CommentRepository cr;
+	private final ArticleRepository ar;
 	
 	public AlertEntity toEntity(AlertRequestDto a) {
+		UserEntity senderEntity = ur.findById(a.getSenderId())
+			    .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
+		UserEntity recieverEntity = ur.findById(a.getReceiverId())
+				.orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
+		
+		CommentEntity comment = cr.findById(a.getCommentId())
+				.orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다."));
+		
+		ArticleEntity article = ar.findById(a.getArticleId())
+				.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
+		
 		return AlertEntity.builder()
-				.article(ArticleEntity.builder().id(a.getArticleId()).build())
-				.recieceComment(CommentEntity.builder().id(a.getCommentId()).build())
-				.sendUser(UserEntity.builder().id(a.getType()).build())
-				.receiveUser(UserEntity.builder().id(a.getReceiverId()).build())
+				.article(article)
+				.recieceComment(comment)
+				.sendUser(senderEntity)
+				.receiveUser(recieverEntity)
 				.type(a.getType())
 				.build();
 	}

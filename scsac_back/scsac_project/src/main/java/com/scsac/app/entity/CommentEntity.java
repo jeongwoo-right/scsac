@@ -3,6 +3,7 @@ package com.scsac.app.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,8 +37,9 @@ public class CommentEntity {
 	@JoinColumn(name="user_id", nullable = false)
 	private UserEntity user;
 	
-	@Column(name="article_id", nullable = false)
-	private Long articleId;
+	@ManyToOne
+	@JoinColumn(name = "article_id", nullable = false)
+	private ArticleEntity article;
 	
 	@Lob
 	@Column(nullable=false)
@@ -45,5 +47,8 @@ public class CommentEntity {
 	
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
+    
+    @OneToMany(mappedBy = "recieceComment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<AlertEntity> alerts;
 
 }

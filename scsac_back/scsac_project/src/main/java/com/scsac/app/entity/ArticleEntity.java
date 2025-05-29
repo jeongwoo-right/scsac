@@ -46,6 +46,8 @@ public class ArticleEntity {
     @Column(columnDefinition = "INT DEFAULT 0")
     private int isUpdated;
 
-    
+    @OneToMany(mappedBy = "article", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CommentEntity> comments = new ArrayList<>();
+
 
 }

@@ -29,7 +29,7 @@ USE `scsac` ;
 CREATE TABLE IF NOT EXISTS `scsac`.`user` (
   `id` VARCHAR(255) NOT NULL,
   `affiliate` VARCHAR(10) NULL DEFAULT NULL,
-  `authority` VARCHAR(45) NOT NULL DEFAULT '3',
+  `authority` VARCHAR(255) NOT NULL,
   `boj_id` VARCHAR(100) NULL DEFAULT NULL,
   `generation` INT NOT NULL,
   `name` VARCHAR(45) NULL DEFAULT NULL,
@@ -49,6 +49,7 @@ CREATE TABLE IF NOT EXISTS `scsac`.`category` (
   `title` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 24
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -66,14 +67,15 @@ CREATE TABLE IF NOT EXISTS `scsac`.`article` (
   `user_id` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FKy5kkohbk00g0w88fi05k2hcw` (`category_id` ASC) VISIBLE,
-  INDEX `FKbc2qerk3l47javnl2yvn51uoi` (`user_id` ASC) VISIBLE,
-  CONSTRAINT `FKbc2qerk3l47javnl2yvn51uoi`
+  INDEX `FK40sd478r28m1ogiheo1mw67bi` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `FK40sd478r28m1ogiheo1mw67bi`
     FOREIGN KEY (`user_id`)
     REFERENCES `scsac`.`user` (`id`),
   CONSTRAINT `FKy5kkohbk00g0w88fi05k2hcw`
     FOREIGN KEY (`category_id`)
     REFERENCES `scsac`.`category` (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 230
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -84,20 +86,19 @@ CREATE TABLE IF NOT EXISTS `scsac`.`comment` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `content` TINYTEXT NOT NULL,
   `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` VARCHAR(255) NOT NULL,
   `article_id` BIGINT NOT NULL,
+  `user_id` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `FK8kcum44fvpupyw6f5baccx25c` (`user_id` ASC) VISIBLE,
-  INDEX `fk_comment_article1_idx` (`article_id` ASC) VISIBLE,
-  CONSTRAINT `FK8kcum44fvpupyw6f5baccx25c`
-    FOREIGN KEY (`user_id`)
-    REFERENCES `scsac`.`user` (`id`),
-  CONSTRAINT `fk_comment_article1`
+  INDEX `FK5yx0uphgjc6ik6hb82kkw501y` (`article_id` ASC) VISIBLE,
+  INDEX `FKn6xssinlrtfnm61lwi0ywn71q` (`user_id` ASC) VISIBLE,
+  CONSTRAINT `FK5yx0uphgjc6ik6hb82kkw501y`
     FOREIGN KEY (`article_id`)
-    REFERENCES `scsac`.`article` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    REFERENCES `scsac`.`article` (`id`),
+  CONSTRAINT `FKn6xssinlrtfnm61lwi0ywn71q`
+    FOREIGN KEY (`user_id`)
+    REFERENCES `scsac`.`user` (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb3;
 
 
@@ -106,28 +107,30 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `scsac`.`alert` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `type` VARCHAR(255) NOT NULL,
   `article_id` BIGINT NOT NULL,
   `receiver_id` VARCHAR(255) NOT NULL,
   `comment_id` BIGINT NOT NULL,
   `sender_id` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK10qs7ppmq3wo0fjuvrdwga1u3` (`article_id` ASC) VISIBLE,
-  INDEX `FKmj2eumavh9o66m84t83drrnre` (`receiver_id` ASC) VISIBLE,
+  INDEX `FKivw1o5t5pubt9agrmosxulnqr` (`receiver_id` ASC) VISIBLE,
   INDEX `FKfhpt2iatrw9edy8dsld50oypq` (`comment_id` ASC) VISIBLE,
-  INDEX `FKhxxwld7bbock13jv3g3xnmqej` (`sender_id` ASC) VISIBLE,
+  INDEX `FKoefe05egr0l5gshr1kvok6tpy` (`sender_id` ASC) VISIBLE,
   CONSTRAINT `FK10qs7ppmq3wo0fjuvrdwga1u3`
     FOREIGN KEY (`article_id`)
     REFERENCES `scsac`.`article` (`id`),
   CONSTRAINT `FKfhpt2iatrw9edy8dsld50oypq`
     FOREIGN KEY (`comment_id`)
     REFERENCES `scsac`.`comment` (`id`),
-  CONSTRAINT `FKhxxwld7bbock13jv3g3xnmqej`
-    FOREIGN KEY (`sender_id`)
-    REFERENCES `scsac`.`user` (`id`),
-  CONSTRAINT `FKmj2eumavh9o66m84t83drrnre`
+  CONSTRAINT `FKivw1o5t5pubt9agrmosxulnqr`
     FOREIGN KEY (`receiver_id`)
+    REFERENCES `scsac`.`user` (`id`),
+  CONSTRAINT `FKoefe05egr0l5gshr1kvok6tpy`
+    FOREIGN KEY (`sender_id`)
     REFERENCES `scsac`.`user` (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8mb3;
 
 

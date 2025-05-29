@@ -1,6 +1,9 @@
 package com.scsac.app.controller;
 
+import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.http.ResponseEntity;
@@ -30,56 +33,60 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/comment")
 @RequiredArgsConstructor
 public class CommentController {
-	
+
 	private final CommentService cs;
 	private final ArticleService as;
 	private final AlertService als;
 	private final UserService us;
-	
+
 	@PostMapping
 	public ResponseEntity<?> addComment(@RequestBody CommentRequestDto comment){
 		CommentResponseDto saved = cs.insertComment(comment);
-		
+
+		List<AlertResponseDto> savedAlert = new ArrayList<>();
+
 		ArticleResponseDto a = as.getArticleById(comment.getArticleId());
 		if (!saved.getUser().getId().equals(a.getUser().getId())) {
 			AlertRequestDto alert = AlertRequestDto.builder()
-										.articleId(comment.getArticleId())
-										.commentId(saved.getId())
-										.receiverId(saved.getUser().getId())
-										.senderId(comment.getUserId())
-										.type("comment")
-										.build();
-//			als.addAlert(alert);
-			
-			Set<String> mentioned = new HashSet<>();
-
-			String[] words = comment.getContent().split(" ");
-			for(String word:words) {
-				if('@'==word.charAt(0)) {
-					try {
-						UserResponseDto recieveUser =  us.findbyId(word.substring(1));
-						if (!recieveUser.getId().equals(a.getUser().getId())) {
-							AlertRequestDto mentionalert = AlertRequestDto.builder()
-									.articleId(comment.getArticleId())
-									.commentId(saved.getId())
-									.receiverId(saved.getUser().getId())
-									.senderId(comment.getUserId())
-									.type("comment")
-									.build();
-						}
-					} catch (Exception e) {
-					mentioned.add(word)
-				}
-			}
-				String reciever = comment.getContent().split(" ")[0].substring(1);
-				
-			}
-//			AlertResponseDto saved = als.addAlert();
+					.articleId(comment.getArticleId())
+					.commentId(saved.getId())
+					.receiverId(saved.getUser().getId())
+					.senderId(comment.getUserId())
+					.type("comment")
+					.build();
+			savedAlert.add(als.addAlert(alert));
 		}
-		return ResponseEntity.ok(saved);
 
+		Set<String> mentioned = new HashSet<>();
+
+		String[] words = comment.getContent().split(" ");
+		for(String word:words) {
+			if('@'==word.charAt(0)) {
+				try {
+					UserResponseDto recieveUser =  us.findbyId(word.substring(1));
+					if (!recieveUser.getId().equals(a.getUser().getId())) {
+						mentioned.add(word.substring(1));
+					}
+				} catch (Exception e) {}
+			}
+		}
+		List<AlertRequestDto> mentions = new ArrayList<>();
+		for(String reciever : mentioned) {
+			AlertRequestDto mentionalert = AlertRequestDto.builder()
+					.articleId(comment.getArticleId())
+					.commentId(saved.getId())
+					.receiverId(reciever)
+					.senderId(comment.getUserId())
+					.type("mention")
+					.build();
+			mentions.add(mentionalert);
+		}
+
+		savedAlert.addAll(als.addAllAlert(mentions));
+		return ResponseEntity.ok(saved);
 	}
-	
+
+
 	@DeleteMapping("/{id}")
 	@PreAuthorize("hasPermission(#id, 'comment', 'write')")
 	public ResponseEntity<?> deleteComment(@PathVariable("id") Long id){
