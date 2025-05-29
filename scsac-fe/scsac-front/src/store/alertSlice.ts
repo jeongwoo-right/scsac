@@ -79,4 +79,4 @@ const alertSlice = createSlice({
 
 
 export const { setAlerts, markAlertAsRead, clearAlerts } = alertSlice.actions
-export default alertSlice.reducer
+export default alertSlice.reducer;
