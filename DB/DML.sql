@@ -144,7 +144,6 @@ INSERT INTO comment (content, user_id, article_id, created_at) VALUES
 ('졸업생 번개 좋네요', '2405', 9, '2024-05-24 18:30:00'),
 ('도움 많이 됐어요 감사합니다!', '2406', 10, '2024-05-24 19:30:00');
 
-<<<<<<< HEAD
 -- 🔔 알림
 INSERT INTO alert (article_id, receiver_id, comment_id, sender_id, type, checked) VALUES
 (1, '2406', 1, '2401', "comment", 0),
@@ -156,17 +155,4 @@ INSERT INTO alert (article_id, receiver_id, comment_id, sender_id, type, checked
 (8, '2400', 7, '2402', "mention", 0),
 (9, '2400', 8, '2405', "mention", 0),
 (10, '2401', 9, '2406', "mention", 0);
-=======
 
-INSERT INTO alert ( `type`, article_id, receiver_id, comment_id, sender_id) VALUES
-('comment', 1, '2406', 1, '2401'),
-('comment', 1, '2406', 2, '2402'),
-('comment', 3, '2405', 3, '2400'),
-('comment', 5, '2405', 4, '2406'),
-('mention', 6, '2406', 5, '2405'),
-('mention', 7, '2411', 6, '2401'),
-('mention', 8, '2400', 7, '2402'),
-('mention', 9, '2400', 8, '2405'),
-('mention', 10, '2401', 9, '2406');
-
->>>>>>> 46c4640e1da930825664bc29a1943a02d1a57487

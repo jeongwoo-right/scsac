@@ -16,7 +16,6 @@ import { useEffect, useState } from 'react'
 import api from './api/axios'
 import { useDispatch } from 'react-redux'
 import { login, logout } from './store/userSlice'
-import PrivateRouteBypassProfileCheck from './components/PrivateRouteBypassProfileCheck'
 import RedirectIfLoggedInRoute from './components/RedirectIfLoggedInRoute'
 import AlertPage from './pages/AlertPage'
 
