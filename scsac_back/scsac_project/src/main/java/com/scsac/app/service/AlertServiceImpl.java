@@ -1,5 +1,6 @@
 package com.scsac.app.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -20,17 +21,22 @@ import lombok.RequiredArgsConstructor;
 public class AlertServiceImpl implements AlertService{
 	private final AlertRepository ar;
 	private final AlertMapper am;
+	private final SseService sse;
 
 	@Override
 	public AlertResponseDto addAlert(AlertRequestDto alert) {
 		AlertEntity ae = ar.save(am.toEntity(alert));
+		sse.send(ae.getReceiveUser().getId(), "알림이 도착했습니다.");
 		return am.toDto(ae);
 	}
 
 	@Override
 	public Collection<? extends AlertResponseDto> addAllAlert(List<AlertRequestDto> mentions) {
-		List<AlertEntity> aes = ar.saveAll(mentions.stream().map(m->am.toEntity(m)).toList());
-		return aes.stream().map(me -> am.toDto(me)).toList();
+		List<AlertResponseDto> alerts = new ArrayList<>();
+		for(AlertRequestDto mention: mentions) {
+			alerts.add(addAlert(mention));
+		}
+		return alerts;
 	}
 
 	@Override

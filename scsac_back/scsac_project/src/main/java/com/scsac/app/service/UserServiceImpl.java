@@ -1,5 +1,6 @@
 package com.scsac.app.service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -76,9 +77,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public int updateAuthority(int generation) {
-		int r = ur.updateAuthority(generation);
-		if (r == 0)
-			return 0;
+		List<UserEntity> users = ur.findAllByGeneration(generation);
+		for(UserEntity user : users) {
+			if("ROLE_Student".equals(user.getAuthority())) {
+				user.setAuthority("ROLE_Graduate");				
+			}
+		}
 		return 1;
 	}
 	
