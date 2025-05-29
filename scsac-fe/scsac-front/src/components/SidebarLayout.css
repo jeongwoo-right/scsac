@@ -1,8 +1,10 @@
+/* 전체 레이아웃 */
 .layout-container {
   display: flex;
   min-height: 100vh;
 }
 
+/* 사이드바 스타일 */
 .sidebar {
   width: 240px;
   background-color: #f4f4f4;
@@ -29,16 +31,24 @@
   color: #007bff;
 }
 
+.sidebar-divider {
+  border: none;
+  border-top: 1px solid #ccc;
+  margin: 16px 0;
+}
+
+/* 콘텐츠 영역 */
 .content {
   flex-grow: 1;
   padding: 24px;
 }
 
+/* 기본 스타일 */
 * {
   box-sizing: border-box;
 }
 
-/* 기본 버튼 스타일 통일 */
+/* 버튼 스타일 공통 */
 .sidebar .open-modal-btn,
 .sidebar .admin-btn {
   width: 100%;
@@ -62,10 +72,10 @@
   background-color: #0056b3;
 }
 
-/* 관리자 버튼은 강조 색상 변경 */
+/* 관리자 버튼 */
 .sidebar .admin-btn {
-  background-color: rgb(161, 158, 158); /* 노란색 */
-  color: #212529;             /* 짙은 텍스트 */
+  background-color: rgb(161, 158, 158);
+  color: #212529;
 }
 
 .sidebar .admin-btn:hover {
@@ -78,15 +88,9 @@
   border-bottom: 1px solid #ccc;
 }
 
-.sidebar-divider {
-  border: none;
-  border-top: 1px solid #ccc;
-  margin: 16px 0;
-}
+/* ---------- 접근 권한 관련 ---------- */
 
-
-/* 접근 권한 */
-
+/* 체크박스 방식 (이전 방식) */
 .access-roles {
   margin-top: 12px;
 }
@@ -99,7 +103,7 @@
 
 .checkbox-row {
   display: flex;
-  gap: 20px; /* 간격 조절 */
+  gap: 20px;
   align-items: center;
   margin-top: 4px;
 }
@@ -107,6 +111,40 @@
 .checkbox-row label {
   display: flex;
   align-items: center;
-  gap: 6px; /* 체크박스와 텍스트 사이 간격 */
+  gap: 6px;
   font-weight: normal;
 }
+
+/* ---------- 버튼 방식 권한 선택 ---------- */
+
+.authority-button-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.authority-button {
+  flex: 1;
+  padding: 10px 12px;
+  background-color: #f4f4f4;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.authority-button:hover {
+  background-color: #e6e6e6;
+  border-color: #999;
+}
+
+.authority-button.active {
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border-color: #007bff;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+

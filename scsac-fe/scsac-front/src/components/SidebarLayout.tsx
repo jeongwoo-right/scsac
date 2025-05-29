@@ -12,6 +12,7 @@ import CreateCategoryModal from "./CreateCategoryModal"
 interface Category {
   id: number
   title: string
+  authority: string
 }
 
 function SidebarLayout() {
@@ -21,8 +22,7 @@ function SidebarLayout() {
   const user = useSelector((state: RootState) => state.user)
   const isProfileComplete = user.name && user.nickname && user.affiliate
 
-  
-  const [selectedAuthority, setSelectedAuthority] = useState<string[]>([]);
+  const [selectedAuthority, setSelectedAuthority] = useState<string[]>(["ROLE_Student"]);
 
   const navigate = useNavigate()
 
@@ -43,11 +43,10 @@ function SidebarLayout() {
       alert("게시판 이름을 입력해주세요!")
       return
     }
-  
 
     try {
       // 접근 권한 post 요청으로 보내기
-      await api.post("/category", {title: newCategory})
+      await api.post("/category", {title: newCategory, authority: selectedAuthority[0]})
       alert("✅ 게시판이 생성되었습니다!")
       setNewCategory("")
       setIsModalOpen(false)
@@ -96,7 +95,7 @@ function SidebarLayout() {
           setNewCategory={setNewCategory}
           selectedAuthority={selectedAuthority}
           setSelectedAuthority={setSelectedAuthority}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => {setIsModalOpen(false); setSelectedAuthority(["ROLE_Student"])}}
           onSubmit={handleCreateCategory}
         />
       )}

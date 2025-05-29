@@ -1,13 +1,13 @@
 // 📁 src/components/CreateCategoryModal.tsx
-import type { ChangeEvent } from "react"
-import "../components/SidebarLayout.css"
+import { useState, type ChangeEvent } from "react"
+import "./CreateCategoryModal.css"
 import type { Dispatch, SetStateAction } from "react"
 
 interface CreateCategoryModalProps {
   newCategory: string
   setNewCategory: (value: string) => void
   selectedAuthority: string[]
-  setSelectedAuthority: Dispatch<SetStateAction<string[]>> // ✅ 요거!
+  setSelectedAuthority: Dispatch<SetStateAction<string[]>>
   onClose: () => void
   onSubmit: () => void
 }
@@ -21,13 +21,12 @@ const CreateCategoryModal = ({
   onSubmit,
 }: CreateCategoryModalProps) => {
 
-  const handleAuthorityToggle = (authority: string) => {
-    setSelectedAuthority(prev =>
-      prev.includes(authority)
-        ? prev.filter(a => a !== authority)
-        : [...prev, authority]
-    );
-  };
+
+
+const handleAuthoritySelect = (authority: string) => {
+  setSelectedAuthority([authority]) // 단일 선택
+
+}
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
@@ -40,27 +39,23 @@ const CreateCategoryModal = ({
           onChange={(e: ChangeEvent<HTMLInputElement>) => setNewCategory(e.target.value)}
         />
 
-        <div className="access-roles">
-          <label>접근 권한:</label>
-          <div className="checkbox-row">
-            <label>
-              <input
-                type="checkbox"
-                value="ROLE_Student"
-                checked={selectedAuthority.includes("ROLE_Student")}
-                onChange={() => handleAuthorityToggle("ROLE_Student")}
-              />
-              재학생
-            </label>
-            <label>
-              <input
-                type="checkbox"
-                value="ROLE_Graduate"
-                checked={selectedAuthority.includes("ROLE_Graduate")}
-                onChange={() => handleAuthorityToggle("ROLE_Graduate")}
-              />
-              졸업생
-            </label>
+      <div className="access-roles">
+          <label>접근 권한 선택</label>
+          <div className="authority-button-group">
+            <button
+              type="button"
+              className={`authority-button ${selectedAuthority.includes("ROLE_Student") ? "active" : ""}`}
+              onClick={() => handleAuthoritySelect("ROLE_Student")}
+            >
+              전체 열람 가능
+            </button>
+            <button
+              type="button"
+              className={`authority-button ${selectedAuthority.includes("ROLE_Graduate") ? "active" : ""}`}
+              onClick={() => handleAuthoritySelect("ROLE_Graduate")}
+            >
+              졸업 후 열람 가능
+            </button>
           </div>
         </div>
 

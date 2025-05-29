@@ -1,0 +1,131 @@
+/* --- 모달 전체 배경 --- */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* --- 모달 내부 박스 --- */
+.modal {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  width: 360px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* --- 입력창 --- */
+.modal input[type="text"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+  margin-bottom: 20px;
+}
+
+.modal input[type="text"]:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* --- 접근 권한 영역 --- */
+.access-roles > label {
+  font-weight: 600;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.authority-button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.authority-button {
+  flex: 1;
+  padding: 10px 14px;
+  background-color: #f5f7fa;
+  color: #333;
+  border: 1.5px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.authority-button:hover {
+  background-color: #e9eef5;
+  border-color: #888;
+}
+
+.authority-button.active {
+  background-color: #0056f0;
+  color: white;
+  border-color: #0056f0;
+  box-shadow: 0 0 0 3px rgba(0, 86, 240, 0.2);
+}
+
+/* --- 하단 버튼 영역 --- */
+.modal-buttons {
+  margin-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.modal-buttons button {
+  flex: 1;
+  padding: 12px 14px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.modal-buttons button:first-child {
+  background-color: #4c8eff;
+  color: white;
+}
+
+.modal-buttons button:first-child:hover {
+  background-color: #3a7be0;
+  transform: translateY(-1px);
+}
+
+.modal-buttons button:last-child {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.modal-buttons button:last-child:hover {
+  background-color: #d0d0d0;
+  transform: translateY(-1px);
+}

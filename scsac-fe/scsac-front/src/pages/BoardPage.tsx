@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import api from "../api/axios"
 import '../components/BoardPage.css'
+import { useSelector } from "react-redux"
+import type { RootState } from "../store"
 
 interface User {
   name: string | null
@@ -34,6 +36,8 @@ function BoardPage() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate()
+  const user = useSelector((state: RootState) => state.user)
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTempKeyword(e.target.value)
@@ -53,19 +57,28 @@ function BoardPage() {
     setLoading(true)
 
     try {
-      const res = await api.get(`/category/${categoryId}`, {params: {page, size, sort, condition, keyword}});
-      console.log(page, total_pages)
+      const res = await api.get(`/category/${categoryId}`, {params: {page, size, sort, condition, keyword}}); // 백엔드에서 게시판 정보 가져오기
+
+
       setArticles(res.data.content)
       setTotalPages(res.data.total_pages)
-      // console.log(res.data)
-      
-    } catch (err) {
-      alert("게시글 불러오기 실패: " + err)
-    }  finally {
+
+
+    } 
+
+    catch (err) {
+      console.error("게시판에 접속할 수 있는 권한이 없습니다.");
+      alert("❌ 게시판에 접속할 수 있는 권한이 없습니다.");
+      navigate("/category");
+    } 
+    
+    finally {
       setLoading(false)
     }
   }
 
+
+  
   // page 상태 등 변경될 때마다 자동 fetch
   useEffect(() => {
     if (!isComposing) {
