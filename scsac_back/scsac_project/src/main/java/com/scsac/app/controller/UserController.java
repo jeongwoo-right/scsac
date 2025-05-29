@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scsac.app.dto.request.UserRequestDto;
@@ -44,7 +45,7 @@ public class UserController {
 	}
 	
 	@PostMapping
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('Admin')")
 	public ResponseEntity<?> insert(@RequestBody Map<String, String> data) {
 		int r = us.insertUser(Integer.parseInt(data.get("num")), Integer.parseInt(data.get("generation")), data.get("password"));
 		if (r == 1) {
@@ -70,10 +71,10 @@ public class UserController {
 		return ResponseEntity.badRequest().build();
 	}
 
-	@PutMapping("/admin")
-	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<?> updateauhthority() {
-		int r = us.updateAuthority();
+	@PutMapping("/graduate")
+	@PreAuthorize("hasRole('Admin')")
+	public ResponseEntity<?> updateauhthority(@RequestParam int generation) {
+		int r = us.updateAuthority(generation);
 		if (r == 1) {
 			return new ResponseEntity<Integer>(r, HttpStatus.OK);
 		} else {
@@ -81,19 +82,11 @@ public class UserController {
 		}
 	}
 
-//	@PutMapping("/add_admin")
-//	@PreAuthorize("hasRole('ADMIN')")
-//	public ResponseEntity<?> updateAdmin(@RequestParam String id) {
-//		User user = us.findbyId(id);
-//		if (user == null) {
-//		    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//		}
-//		user.setAuthority(1);
-//		int r = us.updateUser(user);
-//		if (r == 1) {
-//			return new ResponseEntity<Integer>(r, HttpStatus.OK);
-//		} else {
-//			return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
-//		}
-//	}
+	@PutMapping("/add_admin")
+	@PreAuthorize("hasRole('Admin')")
+	public ResponseEntity<?> updateAdmin(@RequestParam String id) {
+		UserResponseDto user = us.makeAdmin(id);
+		return ResponseEntity.ok().build();
+
+	}
 }

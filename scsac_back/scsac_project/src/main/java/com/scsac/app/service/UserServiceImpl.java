@@ -75,11 +75,19 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public int updateAuthority() {
-		int r = ur.updateAuthority();
+	public int updateAuthority(int generation) {
+		int r = ur.updateAuthority(generation);
 		if (r == 0)
 			return 0;
 		return 1;
 	}
-
+	
+	@Override
+	@Transactional
+	public UserResponseDto makeAdmin(String id) {
+		UserEntity user = ur.findById(id)
+							.orElseThrow(()->new NoSuchElementException("해당 사용자가 없습니다."));
+		user.setAuthority("ROLE_Admin");
+		return um.toDto(user);
+	}
 }

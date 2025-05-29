@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.scsac.app.entity.UserEntity;
@@ -14,6 +15,6 @@ public interface UserRepository extends JpaRepository<UserEntity, String> {
 	Optional<UserEntity> findById(String id); 
 	
 	@Modifying(clearAutomatically = true)
-	@Query("UPDATE UserEntity u SET u.authority='ROLE_Student' WHERE u.authority='ROLE_Graduate'")
-	int updateAuthority();
+	@Query("UPDATE UserEntity u SET u.authority = 'ROLE_Graduate' WHERE u.authority = 'ROLE_Student' AND u.generation = :generation")
+	int updateAuthority(@Param("generation") int generation);
 }
