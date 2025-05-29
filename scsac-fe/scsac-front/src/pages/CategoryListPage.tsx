@@ -16,7 +16,6 @@ interface Category {
   title: string
 }
 
-
 // 카테고리 리스
 
 function CategoryListPage() {
@@ -62,11 +61,7 @@ function CategoryListPage() {
       </main>
 
     </div>
-      // <div className="category-page">
-      //   <div className="main-logo-container">
-      //     <img src={scsacLogo} alt="SCSAC 로고" className="main-logo" />
-      //   </div>
-      // </div>
+
     )
     
 

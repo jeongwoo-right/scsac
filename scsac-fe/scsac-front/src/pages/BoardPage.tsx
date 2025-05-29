@@ -16,27 +16,31 @@ interface ArticleSummary {
   user: User
 }
 
+
 function BoardPage() {
   const {id} = useParams() // category id (문자열로 들어옴) -> url의 :id 가져옴
   const categoryId = Number(id) // 숫자로 변환
   const [articles, setArticles] = useState<ArticleSummary[]>([])
   const [page, setPage] = useState(0) // 백엔드는 0-indexed
-  const [size, setSize] = useState(10) // 몇개씩 볼건지
+  const [size, setSize] = useState(3) // 몇개씩 볼건지
   const [sort, setSort] = useState("dateDesc") // "created_at" 또는 "views"
   const [condition, setCondition] = useState("title") // title 또는 writer
   const [keyword, setKeyword] = useState("")
-  const [totalPages, setTotalPages] = useState(0)
+  const [total_pages, setTotalPages] = useState(0)
   const [loading, setLoading] = useState(true)
 
 
   const navigate = useNavigate()
   const fetchBoard = async () => {
+
+    setLoading(true)
+
     try {
-      // alert("게시글 정렬 시작")
       const res = await api.get(`/category/${categoryId}`, {params: {page, size, sort, condition, keyword}});
+      console.log(page, total_pages)
       setArticles(res.data.content)
-      setTotalPages(res.data.totalPages)
-      console.log(res.data)
+      setTotalPages(res.data.total_pages)
+      // console.log(res.data)
       
     } catch (err) {
       alert("게시글 불러오기 실패: " + err)
@@ -45,13 +49,13 @@ function BoardPage() {
     }
   }
 
-  useEffect(() => {
+  // page 상태 등 변경될 때마다 자동 fetch
+  useEffect(() => {fetchBoard()}, [id, page, size, sort, condition, keyword])
 
-    fetchBoard()
-  }, [id, page, size, sort, condition, keyword])
 
   if (loading)
     return 
+
 
   return (
     <div className="board-container">
@@ -125,13 +129,20 @@ function BoardPage() {
         </tbody>
       </table>
 
-      {/* 페이지네이션 */}
+      {/* 페이지네이션 UI */}
       <div className="pagination">
-        {[...Array(totalPages)].map((_, i) => (
+        {/* 이전 페이지 버튼 */}
+        <button onClick={()=> setPage((prev) => Math.max(prev-1, 0))} disabled={page===0}>«</button>
+        
+        {/* 현재 페이지 버튼 */}
+        {[...Array(total_pages)].map((_, i) => (
           <button key={i} onClick={() => setPage(i)} className={page === i ? "active" : ""} > 
             {i+1} 
           </button>
         ))}
+
+        {/* 다음 페이지 버튼 */}
+        <button onClick={()=> setPage((prev) => Math.max(prev+1, 0))} disabled={page===total_pages-1}>»</button>
 
       </div>
 

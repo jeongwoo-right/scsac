@@ -131,6 +131,11 @@
   font-weight: bold;
 }
 
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
 .board-container {
   padding: 40px;
   padding-bottom: 100px; /* ✅ 하단 공간 확보 */
