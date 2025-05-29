@@ -16,8 +16,12 @@ import { useEffect, useState } from 'react'
 import api from './api/axios'
 import { useDispatch } from 'react-redux'
 import { login, logout } from './store/userSlice'
+<<<<<<< HEAD
 import AlertPage from './pages/AlertPage'
 
+=======
+import PrivateRouteBypassProfileCheck from './components/PrivateRouteBypassProfileCheck'
+>>>>>>> 46c4640e1da930825664bc29a1943a02d1a57487
 
 function App() {
   const dispatch = useDispatch()
@@ -26,14 +30,17 @@ function App() {
   useEffect(() => {
     const restoreUser = async () => {
       const token = localStorage.getItem("jwt")
-
+      
+      console.log(token)
       if (!token) {
         setLoading(false)
+        return
       }
 
       try {
         const res = await api.get("/user/me")
         const user = res.data
+        console.log("user 정보: " + user)
 
         dispatch(login({
           id: user.id,
@@ -48,7 +55,7 @@ function App() {
       }
       
       catch (err) {
-        console.log("토큰이 유효하지 않음. 자동 로그아웃")
+        console.log("토큰이 유효하지 않음. 자동 로그아웃" + err)
         localStorage.removeItem("jwt")
         dispatch(logout())
       }
@@ -85,8 +92,8 @@ function App() {
           <Route path="/article/:id" element={<PrivateRoute><ArticleDetailPage /></PrivateRoute>} />
           <Route path="/article/:id/edit" element={<PrivateRoute><ArticleEditPage/></PrivateRoute>}/>
           <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
-          <Route path="/editProfile" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
           <Route path="/alert" element={<PrivateRoute><AlertPage /></PrivateRoute>}/>
+          <Route path="/editProfile" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
         </Route>
 
       </Routes>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
 import api from "../api/axios"
 import '../components/BoardPage.css'
@@ -22,15 +22,32 @@ function BoardPage() {
   const categoryId = Number(id) // 숫자로 변환
   const [articles, setArticles] = useState<ArticleSummary[]>([])
   const [page, setPage] = useState(0) // 백엔드는 0-indexed
-  const [size, setSize] = useState(3) // 몇개씩 볼건지
+  const [size, setSize] = useState(5) // 몇개씩 볼건지
   const [sort, setSort] = useState("dateDesc") // "created_at" 또는 "views"
   const [condition, setCondition] = useState("title") // title 또는 writer
   const [keyword, setKeyword] = useState("")
+  const [tempKeyword, setTempKeyword] = useState(""); // input에 바인딩되는 임시 상태
+
   const [total_pages, setTotalPages] = useState(0)
   const [loading, setLoading] = useState(true)
-
+  const [isComposing, setIsComposing] = useState(false)
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const navigate = useNavigate()
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTempKeyword(e.target.value)
+  }
+
+  const handleCompositionStart = () => {
+    setIsComposing(true)
+  }
+
+  const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+    setIsComposing(false);
+    setTempKeyword(e.currentTarget.value)
+  }
+
   const fetchBoard = async () => {
 
     setLoading(true)
@@ -50,7 +67,18 @@ function BoardPage() {
   }
 
   // page 상태 등 변경될 때마다 자동 fetch
-  useEffect(() => {fetchBoard()}, [id, page, size, sort, condition, keyword])
+  useEffect(() => {
+    if (!isComposing) {
+      fetchBoard()
+    }
+  }, [id, page, size, sort, condition, keyword])
+  
+  useEffect(()=> {
+    setPage(0)
+    setKeyword("")
+    setCondition("title")
+    setSort("dateDesc")
+  }, [categoryId])
 
 
   if (loading)
@@ -68,24 +96,48 @@ function BoardPage() {
 
       <div className="board-controls">
 
-      {/* 제목, 작성자로 검색 */}
-      <select value={condition} onChange={(e) => setCondition(e.target.value)}>
-        <option value="title">제목</option>
-        <option value="writer">작성자</option>
-      </select>
 
-      <input type="text" placeholder="검색어를 입력하세요" value={keyword} onChange={(e) => setKeyword(e.target.value)}/>
-      <button onClick = {() => {setPage(0); fetchBoard()}}> 검색</button>      
+
+
+      <form
+        className="search-form"
+        onSubmit={(e) => {
+          e.preventDefault(); // 폼 제출 시 페이지 새로고침 방지
+          if (!isComposing) {
+            setPage(0); // 검색 트리거
+            setKeyword(tempKeyword); // ✅ 여기서만 실제 keyword 반영
+          }
+        }}      
+      >
+        
+        {/* 제목, 작성자로 검색 */}
+        <select value={condition} onChange={(e) => setCondition(e.target.value)}>
+          <option value="title">제목</option>
+          <option value="writer">작성자</option>
+        </select>
+
+        {/* 검색창 */}
+        <input
+          ref={inputRef} // ✅ ref 연결
+          type="text" 
+          placeholder="검색어를 입력하세요" 
+          value={tempKeyword} 
+          onChange={handleChange}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
+        />
+        <button type="submit"> 검색</button>
+
 
       {/* 글을 한 페이지에 몇 개씩 볼 것인지 */}
         <select value={size} onChange={(e) => {setSize(Number(e.target.value)); setPage(0)}}>
-          <option value="3">3개씩 보기</option>
-          <option value="30">30개씩 보기</option>
+          <option value="5">5개씩 보기</option>
+          <option value="30">10개씩 보기</option>
         </select>
-
+      </form>
       </div>
 
-      {/* 정렬 버튼 추가 */}
+      {/* 정렬 버튼 */}
       <div className="board-sorting">
         <button
           className={sort === "dateDesc" ? "active" : ""}
@@ -132,17 +184,42 @@ function BoardPage() {
       {/* 페이지네이션 UI */}
       <div className="pagination">
         {/* 이전 페이지 버튼 */}
-        <button onClick={()=> setPage((prev) => Math.max(prev-1, 0))} disabled={page===0}>«</button>
-        
-        {/* 현재 페이지 버튼 */}
-        {[...Array(total_pages)].map((_, i) => (
-          <button key={i} onClick={() => setPage(i)} className={page === i ? "active" : ""} > 
-            {i+1} 
-          </button>
-        ))}
+        <button
+          className="pagination-button"
+          onClick={() => setPage((prev) => Math.max(prev - 1, 0))}
+          style={{ visibility: page === 0 ? 'hidden' : 'visible' }}
+        >
+          &lt;
+        </button>
+        {/* 현재 페이지 / 전체 페이지 */}
+        <form
+          className="pagination-form"
+          onSubmit={(e) => {
+            e.preventDefault()
+            const form = e.target as HTMLFormElement
+            const input = form.elements.namedItem("pageInput") as HTMLInputElement
+            const value = parseInt(input.value, 10)
+
+            if (!isNaN(value) && value >= 1 && value <= total_pages)
+              setPage(value-1)
+            else
+              alert(`1부터 ${total_pages} 사이의 숫자를 입력하세요.`)
+          }
+        }
+        >
+          <input type="number" name="pageInput" defaultValue={page+1} min={1} max={total_pages} className="pagination-input" />
+          <span className="pagination-total"> / {total_pages}</span>
+
+        </form>
 
         {/* 다음 페이지 버튼 */}
-        <button onClick={()=> setPage((prev) => Math.max(prev+1, 0))} disabled={page===total_pages-1}>»</button>
+        <button
+          className="pagination-button"
+          onClick={() => setPage((prev) => Math.min(prev + 1, total_pages - 1))}
+          style={{ visibility: page === total_pages - 1 ? 'hidden' : 'visible' }}
+        >
+          &gt;
+        </button>
 
       </div>
 
