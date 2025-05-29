@@ -28,7 +28,7 @@ public class AlertMapper {
 	public AlertEntity toEntity(AlertRequestDto a) {
 		UserEntity senderEntity = ur.findById(a.getSenderId())
 			    .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
-		UserEntity recieverEntity = ur.findById(a.getReceiverId())
+		UserEntity receiverEntity = ur.findById(a.getReceiverId())
 				.orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
 		
 		CommentEntity comment = cr.findById(a.getCommentId())
@@ -39,20 +39,23 @@ public class AlertMapper {
 		
 		return AlertEntity.builder()
 				.article(article)
-				.recieceComment(comment)
+				.recieveComment(comment)
 				.sendUser(senderEntity)
-				.receiveUser(recieverEntity)
+				.receiveUser(receiverEntity)
 				.type(a.getType())
+				.checked(0)
 				.build();
 	}
 	
 	public AlertResponseDto toDto(AlertEntity a) {
 		return AlertResponseDto.builder()
+				.id(a.getId())
 				.article(am.toDto(a.getArticle()))
-				.recieceComment(cm.toDto(a.getRecieceComment()))
+				.recieveComment(cm.toDto(a.getRecieveComment()))
 				.sendUser(um.toDto(a.getSendUser()))
 				.receiveUser(um.toDto(a.getReceiveUser()))
 				.type(a.getType())
+				.checked(a.getChecked())
 				.build();
 	}
 }

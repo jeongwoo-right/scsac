@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react'
 import api from './api/axios'
 import { useDispatch } from 'react-redux'
 import { login, logout } from './store/userSlice'
+import AlertPage from './pages/AlertPage'
 
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
           <Route path="/article/:id/edit" element={<PrivateRoute><ArticleEditPage/></PrivateRoute>}/>
           <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
           <Route path="/editProfile" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
+          <Route path="/alert" element={<PrivateRoute><AlertPage /></PrivateRoute>}/>
         </Route>
 
       </Routes>

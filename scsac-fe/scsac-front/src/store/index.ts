@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit'
 import userReducer from './userSlice'
+import alertReducer from './alertSlice'
 
 // Redux 스토어 생성
 const store = configureStore({
   reducer: {
     user: userReducer, // user 상태를 userSlice로 관리
+    alert: alertReducer,
   },
 })
 

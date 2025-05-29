@@ -48,7 +48,7 @@ public class CommentEntity {
     @Column(name = "created_at", columnDefinition = "DATETIME DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
     
-    @OneToMany(mappedBy = "recieceComment", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "recieveComment", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<AlertEntity> alerts;
 
 }
