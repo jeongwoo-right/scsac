@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import com.scsac.app.dto.request.CommentRequestDto;
 import com.scsac.app.dto.response.CommentResponseDto;
+import com.scsac.app.entity.ArticleEntity;
 import com.scsac.app.entity.CommentEntity;
 import com.scsac.app.entity.UserEntity;
 import com.scsac.app.repository.ArticleRepository;
@@ -25,10 +26,12 @@ public class CommentMapper {
 		
 		UserEntity userEntity = ur.findById(c.getUserId())
 			    .orElseThrow(() -> new IllegalArgumentException("해당 유저가 없습니다."));
+		ArticleEntity articleEntity = ar.findById(c.getArticleId())
+				.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다."));
 		
 		return CommentEntity.builder()
 				.user(userEntity)
-				.articleId(c.getArticleId())
+				.article(articleEntity)
 				.content(c.getContent())
 				.createdAt(LocalDateTime.now())
 				.build();
@@ -39,7 +42,7 @@ public class CommentMapper {
 		return CommentResponseDto.builder()
 				.id(ce.getId())
 				.user(um.toDto(ce.getUser()))
-				.articleId(ce.getArticleId())
+				.articleId(ce.getArticle().getId())
 				.content(ce.getContent())
 				.createdAt(LocalDateTime.now())
 				.build();
