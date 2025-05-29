@@ -1,0 +1,56 @@
+/* 📁 src/pages/AlertPage.css */
+
+.alert-page {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 24px;
+    font-family: 'Pretendard', sans-serif;
+  }
+  
+  .alert-page h2 {
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+  
+  .alert-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .alert-card {
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    padding: 16px;
+    position: relative;
+    background: #f9f9f9;
+    transition: background 0.3s;
+    cursor: pointer;
+  }
+  
+  .alert-card.new {
+    background: #fff9f0;
+    border-color: #ffbf47;
+  }
+  
+  .alert-content div {
+    margin-bottom: 4px;
+  }
+  
+  .alert-time {
+    font-size: 12px;
+    color: #777;
+  }
+  
+  .new-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: #ff5e5e;
+    color: white;
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+  

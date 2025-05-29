@@ -33,7 +33,7 @@ public class AlertEntity {
 
     @ManyToOne
     @JoinColumn(name = "comment_id", nullable = false)
-    private CommentEntity recieceComment;
+    private CommentEntity recieveComment;
 
     @ManyToOne
     @JoinColumn(name = "sender_id", nullable = false)
@@ -45,4 +45,7 @@ public class AlertEntity {
     
     @Column(nullable = false)
     private String type;
+    
+    @Column(nullable = false)
+    private int checked;
 }

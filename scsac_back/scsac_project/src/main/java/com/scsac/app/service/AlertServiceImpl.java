@@ -2,8 +2,10 @@ package com.scsac.app.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.scsac.app.dto.request.AlertRequestDto;
 import com.scsac.app.dto.response.AlertResponseDto;
@@ -35,5 +37,19 @@ public class AlertServiceImpl implements AlertService{
 	public List<AlertResponseDto> getAlertById(String id) {
 		List<AlertEntity> res = ar.findByReceiveUser_Id(id);
 		return res.stream().map(am::toDto).toList();
+	}
+
+	@Override
+	public void deleteAlert(Long id) {
+		ar.deleteById(id);
+		
+	}
+
+	@Override
+	@Transactional
+	public void checkAlert(Long id) {
+		AlertEntity ae = ar.findById(id)
+							.orElseThrow(()->new NoSuchElementException("해당 알림이 없습니다."));
+		ae.setChecked(1);
 	}
 }

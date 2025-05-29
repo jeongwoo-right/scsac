@@ -14,4 +14,8 @@ public interface AlertService {
 
 	List<AlertResponseDto> getAlertById(String id);
 
+	void deleteAlert(Long id);
+
+	void checkAlert(Long id);
+
 }

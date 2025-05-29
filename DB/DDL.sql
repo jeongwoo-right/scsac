@@ -20,6 +20,10 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- -----------------------------------------------------
 -- Schema scsac
 -- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema scsac
+-- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `scsac` DEFAULT CHARACTER SET utf8mb3 ;
 USE `scsac` ;
 
@@ -107,6 +111,7 @@ DEFAULT CHARACTER SET = utf8mb3;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `scsac`.`alert` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `checked` INT NOT NULL,
   `type` VARCHAR(255) NOT NULL,
   `article_id` BIGINT NOT NULL,
   `receiver_id` VARCHAR(255) NOT NULL,

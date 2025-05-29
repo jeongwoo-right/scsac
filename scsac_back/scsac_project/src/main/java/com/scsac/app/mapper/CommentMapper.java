@@ -44,7 +44,7 @@ public class CommentMapper {
 				.user(um.toDto(ce.getUser()))
 				.articleId(ce.getArticle().getId())
 				.content(ce.getContent())
-				.createdAt(LocalDateTime.now())
+				.createdAt(ce.getCreatedAt())
 				.build();
 	}
 }

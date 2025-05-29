@@ -16,8 +16,12 @@ import { useEffect, useState } from 'react'
 import api from './api/axios'
 import { useDispatch } from 'react-redux'
 import { login, logout } from './store/userSlice'
+<<<<<<< HEAD
 import PrivateRouteBypassProfileCheck from './components/PrivateRouteBypassProfileCheck'
 import RedirectIfLoggedInRoute from './components/RedirectIfLoggedInRoute'
+=======
+import AlertPage from './pages/AlertPage'
+>>>>>>> 2fcdcb648b688757dae494d3d2bc3fa7474112c2
 
 function App() {
   const dispatch = useDispatch()
@@ -88,8 +92,8 @@ function App() {
           <Route path="/article/:id" element={<PrivateRoute><ArticleDetailPage /></PrivateRoute>} />
           <Route path="/article/:id/edit" element={<PrivateRoute><ArticleEditPage/></PrivateRoute>}/>
           <Route path="/mypage" element={<PrivateRoute><MyPage /></PrivateRoute>} />
-          <Route path="/editProfile" element={
-            <PrivateRoute><EditProfile /></PrivateRoute>} />
+          <Route path="/alert" element={<PrivateRoute><AlertPage /></PrivateRoute>}/>
+          <Route path="/editProfile" element={<PrivateRoute><EditProfile /></PrivateRoute>} />
         </Route>
 
       </Routes>
