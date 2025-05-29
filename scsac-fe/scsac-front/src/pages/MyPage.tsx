@@ -14,7 +14,7 @@ const fieldNameMap: { [key: string]: string } = {
   // 필요시 다른 필드도 추가
 }
 
-const excludedKeys = ['isLoggedIn', 'authority', 'password', 'generation']
+const excludedKeys = ['isLoggedIn', 'authority', 'password', 'generation', 'isProfileComplete']
 
 const MyPage: React.FC = () => {
   const user = useSelector((state: RootState) => state.user)

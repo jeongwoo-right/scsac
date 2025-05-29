@@ -6,6 +6,7 @@ import "../components/SidebarLayout.css"
 import { Outlet } from "react-router-dom"
 import { useSelector } from "react-redux"
 import type { RootState } from "../store"
+import CreateCategoryModal from "./CreateCategoryModal"
 
 
 interface Category {
@@ -17,6 +18,8 @@ function SidebarLayout() {
   const [categories, setCategories] = useState<Category[]>([])
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [newCategory, setNewCategory] = useState("")
+  const user = useSelector((state: RootState) => state.user)
+  const isProfileComplete = user.name && user.nickname && user.affiliate
 
   
   const [selectedAuthority, setSelectedAuthority] = useState<string[]>([]);
@@ -26,8 +29,10 @@ function SidebarLayout() {
   const isAdmin = useSelector((state: RootState) => state.user.authority==="ROLE_Admin");
 
   const fetchCategories = async () => {
-    const res = await api.get('/category')
-    setCategories(res.data)
+    if(isProfileComplete) {
+      const res = await api.get('/category')
+      setCategories(res.data)
+    }
   }
 
   useEffect(() => {fetchCategories()}, [])
@@ -64,63 +69,47 @@ function SidebarLayout() {
   return (
     <div className="layout-container">
       <aside className="sidebar">
+        
         { isAdmin &&
             <button className="admin-btn" onClick={()=>navigate(`/admin`)}>
               🛡️ 관리자 페이지
             </button>
         }
+
         <hr className="sidebar-divider" />
+        
         <h3>📂 게시판 목록</h3>
         <button className="open-modal-btn" onClick={() => setIsModalOpen(true)}>
           ➕ 게시판 생성
         </button>
+        
         <ul>
-          {categories.map((cat) => (
+          {isProfileComplete ? ( categories.map((cat) => (
             <li key={cat.id} onClick={() => navigate(`/category/${cat.id}`)}>
               {cat.title}
             </li>
-          ))}
+          ))) : (
+            null
+          )}
         </ul>
+      
       </aside>
-
       <main className="content">
         <Outlet />
       </main>
 
       {/* 게시판 생성 모달 */}
       {isModalOpen && (
-        <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <h3>게시판 생성</h3>
-            <input
-              type="text"
-              value={newCategory}
-              placeholder="게시판 이름"
-              onChange={(e) => setNewCategory(e.target.value)}
-            />
-            
-    
-          {/* 접근 권한 */}
-          <div className="access-roles">
-            <label>접근 권한:</label>
-            <div className="checkbox-row">
-              <label>
-                <input type="checkbox" value="ROLE_Student" checked={selectedAuthority.includes("ROLE_Student")} onChange={() => handleAuthorityToggle("ROLE_Student")}/>
-                재학생
-              </label>
-              <label>
-                <input type="checkbox" value="ROLE_Graduate" checked={selectedAuthority.includes("ROLE_Graduate")} onChange={() => handleAuthorityToggle("ROLE_Graduate")}/>
-                졸업생
-              </label>
-            </div>
-          </div>
-            <div className="modal-buttons">
-              <button onClick={handleCreateCategory}>생성</button>
-              <button onClick={() => setIsModalOpen(false)}>취소</button>
-            </div>
-          </div>
-        </div>
+        <CreateCategoryModal
+          newCategory={newCategory}
+          setNewCategory={setNewCategory}
+          selectedAuthority={selectedAuthority}
+          setSelectedAuthority={setSelectedAuthority}
+          onClose={() => setIsModalOpen(false)}
+          onSubmit={handleCreateCategory}
+        />
       )}
+
     </div>
   )
 }

@@ -3,24 +3,27 @@ import type {PayloadAction} from '@reduxjs/toolkit'
 
 export type UserState = {
   isLoggedIn: boolean
+  isProfileComplete: boolean
   id: string
   password: string
   authority: string
   generation: number
-  affiliate: string
+  affiliate: string | null
   name: string | null
   nickname: string | null
   boj_id: string | null
+  
 }
 
 // 초기 상태
 const initialState: UserState = {
   isLoggedIn: false,
+  isProfileComplete: false,
   id: '0',
   password: '',
   authority: "ROLE_Student",
   generation: 0,
-  affiliate: '',
+  affiliate: null,
   name: null,
   nickname: null,
   boj_id: null,
@@ -31,10 +34,13 @@ const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    login: (_, action: PayloadAction<Omit<UserState, 'isLoggedIn'>>) => {
+    login: (_, action: PayloadAction<Omit<UserState, 'isLoggedIn' | 'isProfileComplete'>>) => {
+      const payload = action.payload
+      const isProfileComplete = !!(payload.name && payload.nickname && payload.affiliate)
       return {
         isLoggedIn: true,
-        ...action.payload,
+        isProfileComplete,
+        ...payload,
       }
     },
 

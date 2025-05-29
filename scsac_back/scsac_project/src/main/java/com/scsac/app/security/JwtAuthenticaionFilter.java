@@ -28,19 +28,19 @@ public class JwtAuthenticaionFilter extends OncePerRequestFilter {
 		
 		
 		String header = request.getHeader("Authorization");
-		
+
 		if (header != null && header.startsWith("Bearer ")) {
 			String token = header.substring(7);
 			
 			if (tokenProvider.validateToken(token)) {
 				String username = tokenProvider.getUsername(token);
 				String role = tokenProvider.getRole(token);
-				
+
 				GrantedAuthority authority = new SimpleGrantedAuthority(role);
 				
 				UsernamePasswordAuthenticationToken auth= 
 						new UsernamePasswordAuthenticationToken(username, null, List.of(authority));
-
+				
 				auth.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 				
 				SecurityContextHolder.getContext().setAuthentication(auth);

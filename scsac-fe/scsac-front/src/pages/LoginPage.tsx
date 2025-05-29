@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import { login, logout } from '../store/userSlice'
 import axios from 'axios'
 import api from '../api/axios'
 import '../components/LoginPage.css'
+import type { RootState } from '../store'
 
 
 function LoginPage() {
@@ -13,7 +14,8 @@ function LoginPage() {
   const [error, setError] = useState('')
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  
+  const user = useSelector((state: RootState) => state.user)
+
   const handleLogin = async () => {
     try {
       const response = await api.post('/login',{ id, password })
@@ -34,7 +36,7 @@ function LoginPage() {
         nickname: userInfo.nickname,
         boj_id: userInfo.boj_id,
       }))
-      
+
       navigate('/category')      
 
     } 
