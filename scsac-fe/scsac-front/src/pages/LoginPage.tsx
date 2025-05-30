@@ -46,22 +46,13 @@ function LoginPage() {
       console.error('❌ 오류 객체:', err)
       if (axios.isAxiosError(err)) {
         const status = err.response?.status
-    
-        if (status === 401) {
-          setError('비밀번호가 틀렸습니다.')
-        } else if (status === 404) {
-          setError('존재하지 않는 사용자입니다.')
-        } else if (status === 403) {
-          setError('접근 권한이 없습니다. 관리자에게 문의해주세요.')
-        } else if (status === 500) {
-          setError('서버 오류입니다. 잠시 후 다시 시도해주세요.')
-        } else if (err.code === 'ECONNABORTED') {
-          setError('서버 연결이 너무 오래 걸립니다. 다시 시도해주세요.')
-        } else if (!err.response) {
-          setError('서버가 응답하지 않습니다. 네트워크를 확인하거나 서버 상태를 점검해주세요.')
-        } else {
-          setError(`알 수 없는 오류입니다. (${err.message})`)
-        }
+        if (status === 401) setError('비밀번호가 틀렸습니다.')
+        else if (status === 404) setError('존재하지 않는 사용자입니다.')
+        else if (status === 403) setError('접근 권한이 없습니다.')
+        else if (status === 500) setError('서버 오류입니다. 잠시 후 다시 시도해주세요.')
+        else if (err.code === 'ECONNABORTED') setError('서버 연결이 너무 오래 걸립니다.')
+        else if (!err.response) setError('서버가 응답하지 않습니다.')
+        else setError(`알 수 없는 오류입니다. (${err.message})`)
       } else {
         setError('예기치 못한 오류가 발생했습니다.')
       }
@@ -71,17 +62,37 @@ function LoginPage() {
 
   return (
     <div className="login-container">
-      <h2>로그인</h2>
-      <input type="text" placeholder="아이디" value={id} 
-        onChange={(e) => setId(e.target.value)}/>
+      <div className="login-box">
+        <h1 className="login-title">SCSAC Board</h1>
+        <p className="login-subtitle">기수 간 지식 공유를 위한 첫걸음</p>
 
-      <input type="password" placeholder="비밀번호" value={password} 
-        onChange={(e) => setPassword(e.target.value)} 
-        onKeyDown={(e) => {if (e.key === 'Enter') handleLogin()}}/> {/* 엔터 키 눌렀을 때도 로그인 실행 */}
-      
-      <button onClick={handleLogin}>로그인</button>
+        <div className="login-field">
+          <label htmlFor="userId">아이디</label>
+          <input
+            id="userId"
+            type="text"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+            placeholder="아이디를 입력하세요"
+          />
+        </div>
 
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+        <div className="login-field">
+          <label htmlFor="userPw">비밀번호</label>
+          <input
+            id="userPw"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="비밀번호를 입력하세요"
+            onKeyDown={(e) => { if (e.key === 'Enter') handleLogin() }}
+          />
+        </div>
+
+        {error && <p className="login-error">{error}</p>}
+
+        <button className="login-button" onClick={handleLogin}>로그인</button>
+      </div>
     </div>
   )
 }

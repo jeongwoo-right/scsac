@@ -3,6 +3,7 @@ import api from "../api/axios";
 import { useNavigate } from "react-router-dom";
 import '../components/CategoryListPage.css'
 import scsacLogo from '../assets/scsac.png'  // ✅ 이미지 import
+import MainPage from "./MainPage";
 
 
 // SCSAC-Board의 메인페이지
@@ -16,7 +17,6 @@ interface Category {
   title: string
 }
 
-// 카테고리 리스
 
 function CategoryListPage() {
   const [categories, setCategories] = useState<Category[]>([])
@@ -56,8 +56,7 @@ function CategoryListPage() {
   return (
     <div className="category-page">
       <main className="category-main">
-        <h4> [게시판 메인 페이지] </h4>
-        <p>카테고리를 선택하세요.</p>
+        <MainPage/>
       </main>
 
     </div>

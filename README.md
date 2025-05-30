@@ -39,6 +39,31 @@ SCSAC Board는 SCSA 구성원들의 지식과 경험을 효과적으로 축적�
 └─ README.md        # 프로젝트 소개 및 기술 스택, 기능 설명 (한글)
 ```
 
+## 실행 방법 (Source Installation & Execution Guide)
+
+### ✅ 1. Repository Clone
+```bash
+git clone https://github.com/hyenem/scsac.git
+```
+scsac 폴더 우클릭 -> Open Git Bash here
+
+### ✅ 2. Frontend 실행
+```bash
+cd scsac-fe/scsac-front
+npm install
+npm run dev
+```
+
+### ✅ 3. Backend 실행
+1. STS 접속 -> workspace를 scsac/scsac_back으로 Launch
+2. Package Explorer에서 scsac-back 우클릭 -> Run As -> Spring Boot App 클릭
+
+### ✅ 4. DB 실행
+Workbench에서 DDL.sql 실행 -> DML.sql 실행
+
+### ✅ 5. 최종 접속 확인
+http://localhost:5173/ 으로 접속
+
 ## 🛠️ 기술 스택
 
 ### 💻 Frontend Core

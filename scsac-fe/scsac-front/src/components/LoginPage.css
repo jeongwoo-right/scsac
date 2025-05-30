@@ -1,61 +1,81 @@
 .login-container {
-  width: 300px;
-  margin: 100px auto;
-  padding: 24px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  font-family: 'Pretendard', sans-serif;
-  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f6f8fa;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.login-container h2 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
-}
-
-.login-container label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 600;
-  color: #555;
-}
-
-.login-container input {
+.login-box {
+  background-color: #ffffff;
+  padding: 40px 50px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   width: 100%;
-  padding: 10px;
-  margin-bottom: 16px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
+  max-width: 400px;
   box-sizing: border-box;
-  transition: border 0.3s;
 }
 
-.login-container input:focus {
-  border: 1px solid #007bff;
+.login-title {
+  font-size: 28px;
+  font-weight: 700;
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.login-subtitle {
+  font-size: 14px;
+  text-align: center;
+  color: #7f8c8d;
+  margin-bottom: 30px;
+}
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.login-field label {
+  font-size: 14px;
+  margin-bottom: 6px;
+  color: #34495e;
+}
+
+.login-field input {
+  padding: 10px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
   outline: none;
+  transition: border-color 0.2s;
 }
 
-.login-container button {
+.login-field input:focus {
+  border-color: #2980b9;
+}
+
+.login-error {
+  color: red;
+  font-size: 13px;
+  margin: -10px 0 10px 0;
+  text-align: center;
+}
+
+.login-button {
   width: 100%;
-  padding: 10px;
-  background-color: #007bff;
+  padding: 12px;
+  font-size: 15px;
   color: white;
-  font-weight: 600;
+  background-color:  #007bff;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  transition: background-color 0.2s;
 }
 
-.login-container button:hover {
-  background-color: #0056b3;
-}
-
-.login-message {
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 16px;
-  color: #333;
+.login-button:hover {
+  background-color: #2980b9;
 }
