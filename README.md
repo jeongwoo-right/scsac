@@ -1,104 +1,107 @@
-# 🛠 팀6 - SCSAC: Board (SCSA 내부 게시판)
+# 🧠 SCSAC Board (SCSA 내부 지식 공유 게시판)
 
-## 📌 기획 배경
+## 👥 팀원 소개
 
-`SCSAC:Board` 는 기수 간 활동이 분리되어 있어, 선배 기수의 경험이나 노하우가 후배들에게 잘 전달되지 않는 경우가 많습니다.  
+| <img alt="김정우 프로필" src="https://github.com/jeongwoo-right.png" width="150px"> | <img alt="김혜민 프로필" src="https://github.com/hyenem.png" width="150px"> |
+| :----------------------------------------------------------------------------------: | :-------------------------------------------------------------------------: |
+| **김정우**                                                                          | **김혜민**                                                                  |
+| [jeongwoo-right](https://github.com/jeongwoo-right)                                | [hyenem](https://github.com/hyenem)                                         |
 
-**SCSAC 내부 게시판**은 이러한 아쉬움을 해소하고자 만들어진 플랫폼으로,  
-기수 간 지식과 경험의 **유산을 축적하고 공유**하는 공간입니다.  
-권한 기반 접근 제한을 통해 **운영의 질서를 유지**하면서도,  
-**누구나 쉽게 작성하고 소통할 수 있는 구조**를 지향합니다.
+## 🗂️ 프로젝트 개요
 
-## 🧰 기술 스택
-### 🔵 Frontend
-- React	컴포넌트 기반 UI 개발, JSX 사용
-- TypeScript	정적 타입 검사를 통한 안정성 향상
-- Redux Toolkit	전역 상태 관리 (로그인 상태, 게시글 목록 등)
-- React Router DOM	게시판/게시글/마이페이지 등 라우팅 처리
-- Axios	API 요청 (withCredentials로 세션 쿠키 전송)
+SCSAC Board는 SCSA 구성원들의 지식과 경험을 효과적으로 축적하고 공유하기 위한 **내부 게시판 플랫폼**입니다. 선후배 간 지식 단절을 해소하고, 사용자 권한 기반 운영을 통해 안정적인 커뮤니티 환경을 제공하는 것을 목표로 합니다.
 
-### 🟡 Backend
-- Spring Boot	RESTful API 제공
-- JPA (Hibernate)	엔티티 기반 ORM 매핑
-- MySQL	RDBMS 기반 게시글/유저/알림 저장
-- Spring Security	세션 기반 로그인 인증/인가 처리
-- Maven	의존성 관리
-- Session + Cookie 인증 방식	로그인 후 세션ID를 쿠키로 유지, 서버에서 인증 처리
+### 🎯 프로젝트 목표
 
-## API 명세
-![API 명세서](./API.png)
+- 선후배 기수 간 **지식 공유 및 축적**
+- **권한 기반 접근 제어**를 통한 운영의 안정성 확보
+- **사용자 맞춤형 인터페이스** 제공
+- 실 서비스 수준의 **풀스택 아키텍처 학습 및 배포 확장 고려**
 
+---
 
-## 📂 기능 구성
+## 폴더 구조
+```
+📦 프로젝트 루트
+├─ scsac_fe/scsac-front/        # 프런트엔드 React 프로젝트
+│  ├─ src/          # React 소스 (컴포넌트, 페이지, 라우터, Redux store 등)
+│  ├─ public/       # 정적 파일 및 HTML 템플릿
+│  └─ package.json  # 프런트엔드 의존성 및 스크립트 설정
+│
+├─ scsac_back/scsac-project/      # 백엔드 Spring Boot 프로젝트
+│  ├─ src/main/java/com/scsac/...  # 메인 소스 (Controller, Service, Repository, Model 등 패키지별 구성)
+│  ├─ src/main/resources/         # 설정 파일 (application.properties 등) 및 리소스
+│  ├─ pom.xml       # Maven 프로젝트 설정 (의존성, 빌드 정보)
+│  └─ ...           # 기타 백엔드 구성 파일
+│
+├─ DB/              # 데이터베이스 관련 (ERD 다이어그램, 초기 SQL 등)
+│
+└─ README.md        # 프로젝트 소개 및 기술 스택, 기능 설명 (한글)
+```
 
-### 📁 1. 게시판 (Category)
+## 🛠️ 기술 스택
 
-#### 🛡️ 게시판 접근 권한
-- 관리자: 전체 접근 및 삭제 가능
-- 권한 레벨에 따라 게시판 노출 제한 가능  
-  (예: 관리자, 사용자(회원정보 변경 여부에 따라))
-- 권한 종류: 0, 1, 2
+### 💻 Frontend Core
+[![My Skills](https://skillicons.dev/icons?i=react,ts,css)](https://skillicons.dev)
 
+- React (TypeScript 기반)
+- Axios로 JWT 세션 기반 API 연동
+- CSS3 기반 사용자 정의 스타일링
+- React Router DOM을 통한 SPA 라우팅
 
-| 권한 레벨 | 설명                         | 접근 가능                       |
-|-----------|------------------------------|----------------------------------|
-| 0         | 관리자                        | 전체 게시판 접근 및 삭제 가능   |
-| 1         | 인증 사용자 (예: 회원 정보 변경)   | 일부 게시판 접근 가능           |
-| 2         | 제한 사용자 (예: 회원 정보 미변경) | 로그인/회원정보 수정 페이지           |
-
-#### 게시판 CRUD
-- **✍ 게시판 생성 (Create)**
-  - 모든 사용자(관리자 포함) 게시판 생성 가능
-  - 사용자 맞춤 기능
-    - 커스터마이징(게시판 순서 사용자별 조정 가능)
-
-- **❌게시판 삭제 (Delete)**
-  - 관리자만 삭제 가능
-
-<br>
-
-### 📝 2. 게시글 (Article)
-
-#### 게시글 CRUD
-- **✍게시글 생성 (Create)**
-  - 제목, 본문
-  - 작성 시각 자동 기록
-  - 사용자 정보 (`user_id`) 저장
-  - 특정 게시판(`category_id`)에 소속
-
-- **🔍게시글 읽기 (Read)**
-  - 조회수 증가 기능 포함
-  - 권한에 따라 접근 제한 가능
-
-- **✏게시글 수정 (Update)**
-  - 본인 게시글만 수정 가능
-  - 수정 시 [수정됨]으로 표시
-
-- **❌게시글 삭제 (Delete)**
-  - 본인 게시글만 삭제 가능
-  - 관리자 삭제 권한 별도 존재
+### 🧩 Backend Core
+[![My Skills](https://skillicons.dev/icons?i=spring,java,mysql)](https://skillicons.dev)
 
 
-<br>
+- Spring Boot (Java)
+- Spring Security를 통한 JWT 인증
+- JPA + Hibernate 기반 ORM
+- MySQL RDBMS
 
-### 💬 3. 댓글 (Comment)
+### 📦 State Management
+[![My Skills](https://skillicons.dev/icons?i=redux)](https://skillicons.dev)
 
-#### 댓글 CRUD
-- **✍댓글 생성**
-  - 특정 게시글(`article_id`)에 소속
-  - 작성자(`user_id`), 작성 시각 저장
+- Redux Toolkit을 통한 전역 상태 관리
+- 로그인, 사용자 정보, 알림 상태 유지
 
-- **🔍댓글 읽기**
-  - 오래된 순으로 내려가도록
+### 🎨 UI/UX
+- 반응형 웹 설계 (미디어쿼리 고려)
 
-- **❌댓글 수정/삭제**
-  - 댓글 수정 불가능
-  - 본인 댓글 삭제 가능
-  - **댓글 작성 시 게시글 작성자에게 알림 전송 기능** 고려
+### 🚦 Routing & Navigation
+- React Router 기반 페이지 전환
+- RESTful URL 패턴 설계 (`/api/articles`, `/api/categories` 등)
+
+### 🤖 AI / NLP
+[<img src="https://upload.wikimedia.org/wikipedia/commons/0/04/ChatGPT_logo.svg" width="40px">](https://openai.com/)
+- OpenAI API
+- ChatGPT (GPT-3.5 Turbo API)
 
 
-<br>
+### 🧰 Development Tools
+[![My Skills](https://skillicons.dev/icons?i=vscode,github,nodejs,maven)](https://skillicons.dev) 
 
-### 🔔 4. 알림 (Alert)
-- **✅알림 시스템**
-  - 댓글 작성 시 게시글 작성자에게 알림 전송
+- Git + GitHub 기반 버전 관리
+- Talend API으로 API 테스트
+- Node.js + npm으로 프론트 관리
+- Maven으로 백엔드 의존성 관리
+
+
+## 🌟 주요 기능
+
+- 🔐 회원가입 & 로그인 (세션 기반 인증)
+- 🧑 권한 기반 게시판 접근 제어
+- 🗂️ 카테고리(게시판) 생성 및 권한 부여 
+- 📝 게시글 CRUD (수정 시 수정됨 표시)
+- 게시판 내 게시글 사용자 맞춤 정렬
+- 💬 댓글 작성, 삭제 및 실시간 알림 기능으로 실시간 피드백 루프 형성
+- 👤 마이페이지를 통한 개인정보 수정
+- 🧠 Open API ChatGPT 3.5 Turbo를 이용한 게시판 기반 질의 답변 기능
+
+
+## ✨ 특장점
+
+- 📚 기수 간 노하우 전파를 위한 구조화된 지식 공유
+- 🛡️ 관리자 중심의 체계적인 권한 제어 시스템
+- 🔁 실시간 피드백을 위한 댓글 알림 시스템
+- 🔧 React + Spring Boot 기반의 확장 가능한 구조
+- 🚀 실제 서비스 배포를 염두에 둔 모듈화 아키텍처
