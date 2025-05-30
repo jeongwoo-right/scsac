@@ -1,5 +1,6 @@
 package com.scsac.app.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -69,6 +70,16 @@ public class ArticleServiceImpl implements ArticleService {
 	public int deleteArticle(Long id) {
 		ar.deleteById(id);
 		return 1;
+	}
+
+	@Override
+	public List<String> getAllArticleContents() {
+		List<ArticleEntity> articles = ar.findAll();
+		List<String> res = new ArrayList<>();
+		for (ArticleEntity article : articles) {
+			res.add("title :"+article.getTitle()+"/ content :"+article.getContent());
+		}
+		return res;
 	}
 
 }

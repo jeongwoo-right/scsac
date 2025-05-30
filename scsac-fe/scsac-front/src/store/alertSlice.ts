@@ -58,6 +58,7 @@ const initialState: AlertState = {
   alerts: []
 }
 
+
 const alertSlice = createSlice({
   name: 'alert',
   initialState,
@@ -75,7 +76,6 @@ const alertSlice = createSlice({
     }
   }
 })
-
 
 
 export const { setAlerts, markAlertAsRead, clearAlerts } = alertSlice.actions

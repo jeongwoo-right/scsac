@@ -1,5 +1,6 @@
 package com.scsac.app.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,9 +13,7 @@ import com.scsac.app.entity.UserEntity;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, String> {
-	Optional<UserEntity> findById(String id); 
-	
-	@Modifying(clearAutomatically = true)
-	@Query("UPDATE UserEntity u SET u.authority = 'ROLE_Graduate' WHERE u.authority = 'ROLE_Student' AND u.generation = :generation")
-	int updateAuthority(@Param("generation") int generation);
+	Optional<UserEntity> findById(String id);
+
+	List<UserEntity> findAllByGeneration(int generation); 
 }

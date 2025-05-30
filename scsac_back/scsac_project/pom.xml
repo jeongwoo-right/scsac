@@ -110,6 +110,10 @@
 		<dependency>
 		  <groupId>org.springframework</groupId>
 		  <artifactId>spring-messaging</artifactId>
+		  </dependency>
+		<dependency>
+		  <groupId>com.google.code.gson</groupId>
+		  <artifactId>gson</artifactId>
 		</dependency>
 	</dependencies>
 

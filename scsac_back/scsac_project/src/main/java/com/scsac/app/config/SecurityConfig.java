@@ -41,7 +41,7 @@ public class SecurityConfig {
 						})
 						)
 				.authorizeHttpRequests(auth -> auth
-						.requestMatchers("/login").permitAll()
+						.requestMatchers("/login", "/sse").permitAll()
 						.requestMatchers(HttpMethod.PUT, "/user").authenticated()
 						.requestMatchers(HttpMethod.GET, "/user/me").authenticated()
 						.anyRequest().access(mustUpdateAuthorizationManager)

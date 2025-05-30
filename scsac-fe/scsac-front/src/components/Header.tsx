@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import api from '../api/axios'
 import AlertDropdown from './AlertDropdown'
 import { setAlerts } from '../store/alertSlice'
+import NotificationListner from '../hooks/NotificationListner'
 
 function Header() {
   const { isLoggedIn, nickname, id } = useSelector((state: RootState) => state.user)
@@ -52,6 +53,8 @@ function Header() {
       <div className="header-title" onClick={()=>navigate('/category')}>SCSAC: Board</div>
 
       <div className="header-buttons">
+        {isLoggedIn && <NotificationListner />}
+
         {isLoggedIn ? (
           <>  
             <span className="nickname">{nickname}님</span>

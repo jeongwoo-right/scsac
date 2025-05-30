@@ -21,23 +21,24 @@ import lombok.RequiredArgsConstructor;
 public class AlertServiceImpl implements AlertService{
 	private final AlertRepository ar;
 	private final AlertMapper am;
-	private final SseService ss;
+
+	private final SseService sse;
 
 	@Override
 	public AlertResponseDto addAlert(AlertRequestDto alert) {
 		AlertEntity ae = ar.save(am.toEntity(alert));
-		ss.send(ae.getReceiveUser().getId(), ae);
-		System.out.println(am.toDto(ae));
+
+		sse.send(ae.getReceiveUser().getId(), "알림이 도착했습니다.");
 		return am.toDto(ae);
 	}
 
 	@Override
 	public Collection<? extends AlertResponseDto> addAllAlert(List<AlertRequestDto> mentions) {
-		List<AlertResponseDto> aes = new ArrayList<>();
-		for(AlertRequestDto alert : mentions) {
-			aes.add(addAlert(alert));
+		List<AlertResponseDto> alerts = new ArrayList<>();
+		for(AlertRequestDto mention: mentions) {
+			alerts.add(addAlert(mention));
 		}
-		return aes;
+		return alerts;
 	}
 
 	@Override

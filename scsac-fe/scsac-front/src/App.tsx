@@ -14,14 +14,20 @@ import MyPage from './pages/MyPage'
 import EditProfile from './pages/EditProfilePage'
 import { useEffect, useState } from 'react'
 import api from './api/axios'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { login, logout } from './store/userSlice'
 import RedirectIfLoggedInRoute from './components/RedirectIfLoggedInRoute'
 import AlertPage from './pages/AlertPage'
+import ChatButton from './components/ChatButton'
+import ChatBot from './components/ChatBot'
+import type { RootState } from './store'
 
 function App() {
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(true)
+  const [showChat, setShowChat] = useState(false);
+  const isLogin = useSelector((state:RootState)=>state.user.isLoggedIn)
+
 
   useEffect(() => {
     const restoreUser = async () => {
@@ -94,6 +100,9 @@ function App() {
 
       </Routes>
     </BrowserRouter>
+    {showChat && isLogin && <ChatBot onClose={() => setShowChat(false)} />}
+    {isLogin && <ChatButton onClick={() => setShowChat((prev) => !prev)} />}
+
     </>
   )
 }
