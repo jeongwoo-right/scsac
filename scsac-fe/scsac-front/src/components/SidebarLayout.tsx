@@ -60,6 +60,8 @@ function SidebarLayout() {
     try{
       await api.delete(`/category/${id}`)
       alert("게시판이 삭제되었습니다.")
+      navigate("/category")
+      fetchCategories()
     } catch {
       alert("게시판 삭제에 실패하였습니다.")
     }
