@@ -40,7 +40,7 @@ interface Article {
   comments: Comment[];
 
 }
-interface Alert {
+export interface Alert {
   id: number | null;
   type: 'comment' | 'mention';
   send_user: User;
@@ -57,7 +57,6 @@ interface AlertState {
 const initialState: AlertState = {
   alerts: []
 }
-
 
 const alertSlice = createSlice({
   name: 'alert',
@@ -78,5 +77,7 @@ const alertSlice = createSlice({
 })
 
 
+
 export const { setAlerts, markAlertAsRead, clearAlerts } = alertSlice.actions
 export default alertSlice.reducer;
+

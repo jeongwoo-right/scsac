@@ -10,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.scsac.app.dto.request.AlertRequestDto;
 import com.scsac.app.dto.response.AlertResponseDto;
+import com.scsac.app.dto.response.ArticleResponseDto;
 import com.scsac.app.entity.AlertEntity;
+import com.scsac.app.entity.ArticleEntity;
 import com.scsac.app.mapper.AlertMapper;
 import com.scsac.app.repository.AlertRepository;
 
@@ -60,4 +62,6 @@ public class AlertServiceImpl implements AlertService{
 							.orElseThrow(()->new NoSuchElementException("해당 알림이 없습니다."));
 		ae.setChecked(1);
 	}
+
+
 }

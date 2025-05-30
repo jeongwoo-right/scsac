@@ -9,10 +9,12 @@ import java.util.Set;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scsac.app.dto.request.AlertRequestDto;
@@ -92,5 +94,11 @@ public class CommentController {
 	public ResponseEntity<?> deleteComment(@PathVariable("id") Long id){
 		cs.deleteComment(id);
 		return ResponseEntity.ok().build();
+	}
+	
+	@GetMapping("/user")
+	public ResponseEntity<?> getArticleByUser(@RequestParam("id") String id){
+		List<CommentResponseDto> comments = cs.getCommentByUserId(id);
+		return ResponseEntity.ok(comments);
 	}
 }

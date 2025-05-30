@@ -1,5 +1,7 @@
 package com.scsac.app.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.scsac.app.dto.request.CommentRequestDto;
@@ -26,6 +28,12 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	public void deleteComment(Long id) {
 		cr.deleteById(id);
+	}
+
+	@Override
+	public List<CommentResponseDto> getCommentByUserId(String id) {
+		List<CommentEntity> comments = cr.findAllByUser_Id(id);
+		return comments.stream().map(cm::toDto).toList();
 	}
 
 }

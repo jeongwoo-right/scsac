@@ -10,4 +10,6 @@ import com.scsac.app.entity.CommentEntity;
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Long>{
 	List<CommentEntity> findAllByArticleId(Long id);
+
+	List<CommentEntity> findAllByUser_Id(String id);
 }

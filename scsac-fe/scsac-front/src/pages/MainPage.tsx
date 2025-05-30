@@ -1,46 +1,58 @@
 // 📁 src/pages/MainPage.tsx
 import React, { useEffect, useState } from "react";
 import "../components/MainPage.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "../store";
 import { useNavigate } from "react-router-dom";
 import api from "../api/axios";
+import { markAlertAsRead, type Alert } from "../store/alertSlice";
 
 function MainPage() {
   const user = useSelector((state: RootState) => state.user);
+  const alerts = useSelector((state:RootState)=>state.alert.alerts)
   const [myStats, setMyStats] = useState({ articles: 0, comments: 0 });
-  const [recentAlerts, setRecentAlerts] = useState([]);
+  const [recentAlerts, setRecentAlerts] = useState<Alert[]>([]);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  const checkAlert = async (alertId: number, articleId: number) => {
+    try {
+      await api.put(`/alert/${alertId}`)
+      dispatch(markAlertAsRead(alertId))
+      navigate(`/article/${articleId}`)
+    } catch (err) {
+      console.error("알림 확인 실패", err)
+    }
+  }
 
   useEffect(() => {
     const fetchMyStats = async () => {
       try {
-        const res = await api.get(`/user/${user.id}/summary`);
-        setMyStats(res.data);
+        const newMyState = {articles:0, comments:0}
+        const articles = await api.get(`article/user?id=${user.id}`);
+        const comments = await api.get(`comment/user?id=${user.id}`);
+        newMyState.articles=articles.data.length
+        newMyState.comments=comments.data.length
+
+        setMyStats(newMyState);
       } catch (err) {
         console.error("요약 정보 불러오기 실패", err);
       }
     };
 
-    const fetchAlerts = async () => {
-      try {
-        const res = await api.get(`/alert?id=${user.id}`);
-        setRecentAlerts(res.data.slice(0, 5));
-        console.log(res.data)
-      } catch (err) {
-        console.error("알림 불러오기 실패", err);
-      }
-    };
+    const recent = [...alerts] // 배열 복사
+    .sort((a, b) => new Date(b.recieve_comment.created_at).getTime() - new Date(a.recieve_comment.created_at).getTime())
+    .slice(0, 5);
+  
+  setRecentAlerts(recent);
 
     if (user.id) {
       fetchMyStats();
-      fetchAlerts();
     }
-  }, [user]);
+  }, [user, alerts]);
 
-  const handleAlertClick = (articleId: number) => {
-    navigate(`/article/${articleId}`);
-  };
+
 
   return (
     <div className="main-container">
@@ -67,7 +79,7 @@ function MainPage() {
               <li
                 key={alert.id}
                 className={`alert-preview-item ${alert.checked === 0 ? "new" : ""}`}
-                onClick={() => handleAlertClick(alert.article.id)}
+                onClick={() => checkAlert(alert.id, alert.article.id)}
               >
                 {alert.type === "comment" ? (
                   <div>

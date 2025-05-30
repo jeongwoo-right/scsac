@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.scsac.app.dto.response.AlertResponseDto;
+import com.scsac.app.dto.response.ArticleResponseDto;
 import com.scsac.app.service.AlertService;
 
 import lombok.RequiredArgsConstructor;
@@ -40,4 +41,6 @@ public class AlertController {
 		as.checkAlert(id);
 		return ResponseEntity.ok().build();
 	}
+	
+
 }

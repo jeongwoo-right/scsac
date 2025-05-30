@@ -19,5 +19,6 @@ public interface ArticleService {
 	int deleteArticle(Long id);
 
 	List<String> getAllArticleContents();
+	List<ArticleResponseDto> getArticleByUserId(String id);
 
 }

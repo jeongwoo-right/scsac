@@ -21,4 +21,6 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity, Long>{
 
 	Page<ArticleEntity> findAllByCategoryIdAndUser_NameContaining(Long id, String keyword, Pageable pageable);
 
+	List<ArticleEntity> findAllByUser_Id(String id);
+
 }

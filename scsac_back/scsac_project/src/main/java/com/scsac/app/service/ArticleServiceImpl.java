@@ -81,5 +81,11 @@ public class ArticleServiceImpl implements ArticleService {
 		}
 		return res;
 	}
+	
+	@Override
+	public List<ArticleResponseDto> getArticleByUserId(String id) {
+		List<ArticleEntity> articles = ar.findAllByUser_Id(id);
+		return articles.stream().map(am::toDto).toList();
+	}
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.scsac.app.dto.request.AlertRequestDto;
 import com.scsac.app.dto.response.AlertResponseDto;
+import com.scsac.app.dto.response.ArticleResponseDto;
 
 public interface AlertService {
 
@@ -17,5 +18,6 @@ public interface AlertService {
 	void deleteAlert(Long id);
 
 	void checkAlert(Long id);
+
 
 }
