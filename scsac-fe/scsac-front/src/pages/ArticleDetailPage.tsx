@@ -27,6 +27,7 @@ interface Article {
   }
   category: Category
   comments: Comment[]
+  is_updated : number
 }
 
 interface Comment {
@@ -138,7 +139,7 @@ function ArticleDetailPage() {
   return (
     <div className = "article-detail">
       {/* ✅ 게시글 섹션 */}
-      <h2>{article.title}</h2>
+      <h2>{article.title}{article.is_updated===1 && <span style={{ color: "gray", fontSize: "0.7rem", fontWeight: "normal" }}>(수정됨)</span>}</h2>
       <div className="article-meta">
         👤 작성자: {article.user.name}({article.user.affiliate}) | 🕒 {new Date(article.created_at).toLocaleString()} | 👁️ {article.views} 조회
       </div>

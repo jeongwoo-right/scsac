@@ -34,8 +34,8 @@ public class AiController {
         List<String> articles = as.getAllArticleContents();
 
         String question = map.get("question");
-        String systemContent = "너는 게시판을 참고해서 사용자에게 정보를 주는 챗봇이야. 해당 게시판은 SCSA라는 교육기관의 커뮤니티이고, 그 교육기관의 학생들이 사용자야. 다음 자료들을 참고해서 알려줘. 자료에 참고할 만한 내용이 없으면 다시 한번 검토해. 자료 없다고 안내하고 끝내지말고, 꼭 유의미한 정보를 제공해야해. 형식은 친절한 안내원의 말처럼. 이모티콘도 추가해";
-        String fullContent = systemContent + "\n\n<질문>\n" + question + "\n\n<참고자료>\n" + String.join("\n", articles);
+        String systemContent = "너는 게시판을 참고해서 사용자에게 정보를 주는 챗봇이야. 해당 게시판은 SCSA라는 교육기관의 커뮤니티이고, 그 교육기관의 학생들이 사용자야. 다음 자료들을 참고해서 질문에 답변해줘. 자료에 참고할 만한 내용이 없으면 다시 한번 검토해. 꼭 유의미한 정보를 제공해야해. 형식은 친절한 안내원의 말처럼. 이모티콘도 추가해";
+        String fullContent = systemContent + "\n\n<질문>\n" + question + "\n\n<게시판 내용>\n" + String.join("\n", articles);
 
         ChatRequest.Message message = new ChatRequest.Message("user", fullContent);
         ChatRequest chatRequest = new ChatRequest("gpt-3.5-turbo", List.of(message));

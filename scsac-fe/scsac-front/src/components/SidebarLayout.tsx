@@ -37,6 +37,7 @@ function SidebarLayout() {
 
   useEffect(() => {fetchCategories()}, [user])
   
+  
 
   const handleCreateCategory = async () => {
     if (!newCategory.trim()) {
@@ -55,6 +56,15 @@ function SidebarLayout() {
       alert("❌ 생성 실패")
     } 
   }
+  const deleteCategory = async (id : number) => {
+    try{
+      await api.delete(`/category/${id}`)
+      alert("게시판이 삭제되었습니다.")
+    } catch {
+      alert("게시판 삭제에 실패하였습니다.")
+    }
+  }
+
 
   return (
     <div className="layout-container">
@@ -77,6 +87,7 @@ function SidebarLayout() {
           {isProfileComplete ? ( categories.map((cat) => (
             <li key={cat.id} onClick={() => navigate(`/category/${cat.id}`)}>
               {cat.title}
+              {user.authority==="ROLE_Admin" && <button className="delete-button" onClick={()=>deleteCategory(cat.id)}>X</button>}
             </li>
           ))) : (
             null
