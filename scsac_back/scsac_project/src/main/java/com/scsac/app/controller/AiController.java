@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.scsac.app.ApiKey;
 import com.scsac.app.service.ArticleService;
 
 import lombok.RequiredArgsConstructor;
@@ -25,7 +26,7 @@ import lombok.RequiredArgsConstructor;
 public class AiController {
 
     private final ArticleService as;
-    private final String apiKey = "";
+    private final String apiKey = ApiKey.apiKey;
     private final String endpoint = "https://api.openai.com/v1/chat/completions";
 
     @PostMapping
