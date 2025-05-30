@@ -145,7 +145,7 @@ function BoardPage() {
       {/* 글을 한 페이지에 몇 개씩 볼 것인지 */}
         <select value={size} onChange={(e) => {setSize(Number(e.target.value)); setPage(0)}}>
           <option value="5">5개씩 보기</option>
-          <option value="30">10개씩 보기</option>
+          <option value="10">10개씩 보기</option>
         </select>
       </form>
       </div>

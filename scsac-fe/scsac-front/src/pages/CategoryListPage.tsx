@@ -60,10 +60,7 @@ function CategoryListPage() {
       </main>
 
     </div>
-
     )
-    
-
 }
 
 export default CategoryListPage

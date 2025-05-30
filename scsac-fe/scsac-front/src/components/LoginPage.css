@@ -79,3 +79,8 @@
 .login-button:hover {
   background-color: #2980b9;
 }
+
+
+.login-button {
+  font-family: 'SUIT', 'Pretendard', 'Noto Sans KR';
+}

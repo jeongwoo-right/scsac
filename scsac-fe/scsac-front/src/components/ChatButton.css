@@ -11,4 +11,11 @@
   font-size: 28px;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1; /* 줄 높이 기본화 */
+  padding: 0; /* 혹시 있을 여백 제거 */
 }
+
