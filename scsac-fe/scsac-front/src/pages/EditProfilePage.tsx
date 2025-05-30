@@ -33,13 +33,13 @@ const EditProfile: React.FC = () => {
   const handleSubmit = async () => {
     const hasEmpty = Object.entries(form).some(([key, val]) => {
       if (key === 'id' || key === 'boj_id')
-         return false // id는 제외하고 검증
+         return false // id와 boj_id는 제외하고 검증
 
       return typeof val === 'string' && val.trim() === ''
     })
 
     if (hasEmpty || form.generation === 0) {
-      setError('모든 항목을 입력해 주세요.')
+      setError('모든 필수 항목을 입력해 주세요. (BOJ 아이디는 선택)')
       return
     }
 

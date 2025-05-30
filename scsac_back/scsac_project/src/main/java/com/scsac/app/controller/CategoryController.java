@@ -42,6 +42,7 @@ public class CategoryController {
 													@RequestParam int size,
 													@RequestParam String condition,
 													@RequestParam String keyword){
+		System.out.println(sort);
 		Page<ArticleResponseDto> articles = cs.getArticlesByCategoryId(id, sort, page, size, condition, keyword);
 		return ResponseEntity.ok(articles);
 	}

@@ -48,7 +48,7 @@ function LoginPage() {
         const status = err.response?.status
         if (status === 401) setError('비밀번호가 틀렸습니다.')
         else if (status === 404) setError('존재하지 않는 사용자입니다.')
-        else if (status === 403) setError('접근 권한이 없습니다.')
+        else if (status === 403) setError('올바른 아이디와 비밀번호를 입력하세요.')
         else if (status === 500) setError('서버 오류입니다. 잠시 후 다시 시도해주세요.')
         else if (err.code === 'ECONNABORTED') setError('서버 연결이 너무 오래 걸립니다.')
         else if (!err.response) setError('서버가 응답하지 않습니다.')
@@ -63,7 +63,7 @@ function LoginPage() {
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1 className="login-title">SCSAC Board</h1>
+        <h1 className="login-title">SCSAC: Board</h1>
         <p className="login-subtitle">기수 간 지식 공유를 위한 첫걸음</p>
 
         <div className="login-field">

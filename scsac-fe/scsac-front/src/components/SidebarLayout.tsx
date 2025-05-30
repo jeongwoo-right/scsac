@@ -81,9 +81,10 @@ function SidebarLayout() {
         <hr className="sidebar-divider" />
         
         <h3>📂 게시판 목록</h3>
-        <button className="open-modal-btn" onClick={() => setIsModalOpen(true)}>
+        {isProfileComplete ? (<button className="open-modal-btn" onClick={() => setIsModalOpen(true)}>
           ➕ 게시판 생성
-        </button>
+        </button>) : null
+        }
         
         <ul>
           {isProfileComplete ? ( categories.map((cat) => (

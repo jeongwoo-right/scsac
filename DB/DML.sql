@@ -4,11 +4,11 @@ USE scsac;
 INSERT INTO `user` (`id`, `password`, `authority`, `generation`, `affiliate`, `name`, `nickname`, `boj_id`) VALUES
 ('2406', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', 'ROLE_Admin', 24, 'DX', '김혜민', 'hyenem', 'hyenem'),
 ('2402', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', 'ROLE_Admin', 24, 'DX', '김승기', 'testfirst', 'testfirst'),
-('2405', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', 'ROLE_Admin', 24, 'SDS', '김정우', 'jungwoo0405', 'jungwoo0405'),
+('2405', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', 'ROLE_Admin', 24, 'SDS', '김정우', '정코', 'jwkim0405'),
 ('2411', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', 'ROLE_Admin', 24, 'DX', '이준영', 'jylee0619', 'jylee0619'),
 ('2400', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', 'ROLE_Student', 25, 'SDS', '신사임당', '50000', '50000'),
 ('2401', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', 'ROLE_Graduate', 25, 'DS', '홍길동', 'cantcallfather', NULL),
-('2500', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', 'ROLE_Student', 5, NULL, NULL, NULL, NULL);
+('2500', '$2a$12$4Ve5zKH2eFOp4fGHAvv8Q.6qdFZRqsgYKqvuhKacsF0LHU2hWDC56', 'ROLE_Student', 25,  'SDS', '이준환', 'babyjh', 'babyjh');
 
 -- 📂 게시판 (category.authority도 문자열)
 INSERT INTO category (authority, title) VALUES
