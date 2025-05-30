@@ -50,7 +50,7 @@ public class CommentController {
 			AlertRequestDto alert = AlertRequestDto.builder()
 					.articleId(comment.getArticleId())
 					.commentId(saved.getId())
-					.receiverId(saved.getUser().getId())
+					.receiverId(a.getUser().getId())
 					.senderId(comment.getUserId())
 					.type("comment")
 					.build();
