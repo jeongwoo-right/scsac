@@ -39,6 +39,8 @@ SCSAC Board는 SCSA 구성원들의 지식과 경험을 효과적으로 축적�
 └─ README.md        # 프로젝트 소개 및 기술 스택, 기능 설명 (한글)
 ```
 
+---
+
 ## 실행 방법 (Source Installation & Execution Guide)
 
 ### ✅ 1. Repository Clone
@@ -63,6 +65,8 @@ Workbench에서 DDL.sql 실행 -> DML.sql 실행
 
 ### ✅ 5. 최종 접속 확인
 http://localhost:5173/ 으로 접속
+
+---
 
 ## 🛠️ 기술 스택
 
@@ -109,6 +113,8 @@ http://localhost:5173/ 으로 접속
 - Talend API으로 API 테스트
 - Node.js + npm으로 프론트 관리
 - Maven으로 백엔드 의존성 관리
+
+---
 
 
 ## 🌟 주요 기능
