@@ -24,9 +24,7 @@ SCSAC Board는 SCSA 구성원들의 지식과 경험을 효과적으로 축적�
 
 > 프로젝트의 주요 기능을 직관적으로 이해할 수 있도록 데모 영상을 제공합니다.
 
-```
-아래 `이미지 클릭`하여(또는 src/Final_UCC_Demo_Video.mp4 파일)을 통해 확인할 수 있습니다.
-```
+**⬇️이미지를 클릭하여 데모 영상 시청하기**
 [![SCSAC Board 데모 영상](src/demo_image.png)](https://www.youtube.com/watch?v=iD-JkBWfu8Q)
 
 
