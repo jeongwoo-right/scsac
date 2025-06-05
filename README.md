@@ -20,6 +20,14 @@ SCSAC Board는 SCSA 구성원들의 지식과 경험을 효과적으로 축적�
 
 ---
 
+## 🎥 데모 영상
+
+> 프로젝트의 주요 기능을 직관적으로 이해할 수 있도록 데모 영상을 제공합니다.
+
+**⬇️이미지를 클릭하여 데모 영상 시청하기**
+[![SCSAC Board 데모 영상](src/demo_image.png)](https://www.youtube.com/watch?v=iD-JkBWfu8Q)
+
+
 ## 폴더 구조
 ```
 📦 프로젝트 루트
